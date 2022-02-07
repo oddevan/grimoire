@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import User from '../_components/User';
 
 const Home: NextPage = () => {
   return (
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
       </Head>
       <h1>Grimoire</h1>
       <p>A TCG management app by <Link href={'https://www.oddevan.com/'}>oddEvan</Link>.</p>
+      <User/>
     </div>
   )
 }
