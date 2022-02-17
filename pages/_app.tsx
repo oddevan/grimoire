@@ -1,16 +1,8 @@
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { NextUIProvider } from '@nextui-org/react';
-import { SessionProvider } from 'next-auth/react';
+import type { AppProps } from "next/app";
 
-function GrimoireApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  return (
-    <SessionProvider session={session}>
-      <NextUIProvider>
-        <Component {...pageProps} />
-      </NextUIProvider>
-    </SessionProvider>
-  )
+function GrimoireApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
 }
 
 export default GrimoireApp
