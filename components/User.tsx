@@ -1,39 +1,29 @@
 import { useState } from "react";
 import OAuth2Login from "react-simple-oauth2-login";
+import { useSmolblog } from "../contexts/SmolblogProvider";
 
 const User = () => {
-  const [accessToken, setAccessToken] = useState(null);
-  const [userName, setUserName] = useState(null);
+	const { smolblogAccessCode, setSmolblogAccessCode } = useSmolblog();
 
-  const onSuccess = (res: any) => {
-    setAccessToken(res.access_token);
+	const onSuccess = (res: any) => {
+		setSmolblogAccessCode(res.access_token);
+	};
 
-    fetch("https://smolblog.com/wp-json/wp/v2/pages/34?context=edit", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${res.access_token}` },
-    })
-      .then((result) => result.json())
-      .then((result) => console.log({ result }))
-      .catch((error) => console.error(error));
-  };
+	if (smolblogAccessCode) {
+		return <span className="navbar-text">Logged in as [TBD]</span>;
+	}
 
-  return (
-    <>
-      {accessToken && (
-        <p>
-          Logged in with <code>{accessToken}</code>
-        </p>
-      )}
-      <OAuth2Login
-        authorizationUrl="https://smolblog.com/oauth/authorize/"
-        responseType="token"
-        clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
-        redirectUri="http://localhost:3000/oauth-callback"
-        onSuccess={onSuccess}
-        onFailure={(res: any) => console.error(res)}
-      />
-    </>
-  );
+	return (
+		<OAuth2Login
+			authorizationUrl="https://smolblog.com/oauth/authorize/"
+			responseType="token"
+			clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
+			redirectUri="http://localhost:3000/oauth-callback"
+			onSuccess={onSuccess}
+			onFailure={(res: any) => console.error(res)}
+			className="btn btn-outline-light"
+		/>
+	);
 };
 
 export default User;
