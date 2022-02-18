@@ -27,7 +27,7 @@ const User = () => {
       <OAuth2Login
         authorizationUrl="https://smolblog.com/oauth/authorize/"
         responseType="token"
-        clientId="pvY7oLOxc68YixsaACothQ4hirAN8dsw8ZDWiRSs" // app public key
+        clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
         redirectUri="http://localhost:3000/oauth-callback"
         onSuccess={onSuccess}
         onFailure={(res: any) => console.error(res)}
