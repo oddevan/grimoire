@@ -18,7 +18,7 @@ const User = () => {
 			authorizationUrl="https://smolblog.com/oauth/authorize/"
 			responseType="token"
 			clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
-			redirectUri="http://localhost:3000/oauth-callback"
+			redirectUri="https://grimoire.oddevan.com/oauth-callback"
 			onSuccess={onSuccess}
 			onFailure={(res: any) => console.error(res)}
 			className="btn btn-outline-light"
