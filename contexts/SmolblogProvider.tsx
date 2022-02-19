@@ -1,4 +1,9 @@
 import {
+	ApolloClient,
+	NormalizedCacheObject,
+	InMemoryCache,
+} from "@apollo/client";
+import {
 	createContext,
 	Dispatch,
 	Fragment,
@@ -9,21 +14,36 @@ import {
 
 export interface SmolblogContextProps {
 	smolblogAccessCode: string;
-	setSmolblogAccessCode: Dispatch<SetStateAction<string>>;
+	apolloClient?: ApolloClient<NormalizedCacheObject>;
+
+	setSmolblogCode: Function;
 }
 const SmolblogContext = createContext<SmolblogContextProps>({
 	smolblogAccessCode: "",
-	setSmolblogAccessCode: () => {},
+	setSmolblogCode: () => {},
 });
 
 export default function SmolblogProvider({ children = <Fragment /> }) {
 	const [smolblogAccessCode, setSmolblogAccessCode] = useState("");
+	const [apolloClient, setApolloClient] = useState(
+		new ApolloClient({ cache: new InMemoryCache() })
+	);
 
 	return (
 		<SmolblogContext.Provider
 			value={{
 				smolblogAccessCode,
-				setSmolblogAccessCode,
+				setSmolblogCode: (code: string) => {
+					setSmolblogAccessCode(code);
+					setApolloClient(
+						new ApolloClient({
+							uri: "https://grimoireapp.smolblog.com/graphql/",
+							cache: new InMemoryCache(),
+							headers: { Authorization: `Bearer ${code}` },
+						})
+					);
+				},
+				apolloClient,
 			}}
 		>
 			{children}
