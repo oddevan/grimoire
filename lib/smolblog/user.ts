@@ -24,10 +24,8 @@ export async function getCurrentUserInfo(apollo?: ApolloClient<NormalizedCacheOb
     `
   });
 
-	console.log({response});
-
-  return {
+  return response ? {
 		username: response.data.viewer.username,
 		displayName: response.data.viewer.name,
-	}
+	} : undefined;
 }
