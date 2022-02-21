@@ -18,7 +18,7 @@ const User = () => {
 				authorizationUrl="https://grimoireapp.smolblog.com/oauth/authorize/"
 				responseType="token"
 				clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
-				redirectUri={`${
+				redirectUri={`//${
 					process.env.NEXT_PUBLIC_VERCEL_URL ?? ""
 				}/oauth-callback`}
 				onSuccess={onSuccess}
