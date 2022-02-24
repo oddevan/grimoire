@@ -3,14 +3,7 @@ import {
 	NormalizedCacheObject,
 	InMemoryCache,
 } from "@apollo/client";
-import {
-	createContext,
-	Dispatch,
-	Fragment,
-	SetStateAction,
-	useContext,
-	useState,
-} from "react";
+import { createContext, Fragment, useContext, useState } from "react";
 
 export interface SmolblogContextProps {
 	smolblogAccessCode: string;
