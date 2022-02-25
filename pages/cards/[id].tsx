@@ -1,6 +1,10 @@
-import { GetStaticProps } from "next";
+import type { GetStaticPropsContext } from "next";
 import { getAllCardIds, getCardInfo } from "../../staticBuild";
 import { GrimoireCard } from "../../types/GrimoireCard";
+
+type CardPageParams = {
+	id: string;
+};
 
 export default function CardPage(card: GrimoireCard) {
 	return (
@@ -23,8 +27,16 @@ export async function getStaticPaths() {
 	};
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-	// const id: string = context.params ? ( (context.params.id is String[]) ? context.params.id[0] : context.params.id ) : ''
-	const card = await getCardInfo(context.params?.id);
-	return { props: { card } };
+export const getStaticProps = async ({
+	params,
+}: GetStaticPropsContext<CardPageParams>) => {
+	const card = await getCardInfo(params?.id ?? "");
+
+	if (!card) {
+		throw new TypeError(
+			params?.id ? `No card found for id ${params.id}` : "Params not passed"
+		);
+	}
+
+	return { props: card };
 };
