@@ -13,15 +13,12 @@ const User = () => {
 	};
 
 	if (!smolblogAccessCode) {
-		console.log(`http://${
-			process.env.NEXT_PUBLIC_VERCEL_URL ?? ""
-		}/oauth-callback`)
 		return (
 			<OAuth2Login
 				authorizationUrl="https://grimoireapp.smolblog.com/oauth/authorize/"
 				responseType="token"
 				clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
-				redirectUri={`http://${
+				redirectUri={`${window.location.protocol}//${
 					process.env.NEXT_PUBLIC_VERCEL_URL ?? ""
 				}/oauth-callback`}
 				onSuccess={onSuccess}
