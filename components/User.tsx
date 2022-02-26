@@ -13,9 +13,7 @@ const User = () => {
 	};
 
 	if (!smolblogAccessCode && global.window) {
-		const redirectUri = `${window.location.protocol}//${
-			process.env.NEXT_PUBLIC_VERCEL_URL ?? ""
-		}/oauth-callback`;
+		const redirectUri = `${window.location.protocol}//${window.location.hostname}/oauth-callback`;
 
 		return (
 			<OAuth2Login
