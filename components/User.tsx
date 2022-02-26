@@ -1,5 +1,5 @@
 import { ApolloConsumer } from "@apollo/client";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import OAuth2Login from "react-simple-oauth2-login";
 import { useSmolblog } from "../contexts/SmolblogProvider";
 import { getCurrentUserInfo, UserInfo } from "../lib/smolblog/user";
@@ -38,7 +38,7 @@ const User = () => {
 		.then((info) => info && setUser(info))
 		.catch((error) => console.error(error));
 
-	return <span className="navbar-text">Loading...</span>;
+	return <Fragment />;
 };
 
 export default User;
