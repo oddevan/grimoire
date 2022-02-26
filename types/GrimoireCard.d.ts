@@ -1,6 +1,8 @@
 export interface GrimoireCard {
-	id: String,
-	hash: String,
-	sku: number,
-	name: String,
+	id: string,
+	name: string,
+	sku?: number,
+	guruId?: string,
+	hash?: string,
+	printings?: [GrimoireCard],
 }
