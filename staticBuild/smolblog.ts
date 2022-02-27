@@ -37,9 +37,12 @@ export async function getCardInfo(id: string) : Promise<GrimoireCard | undefined
 					name
 					sku
 					guruId
+					imgUrl
+					setName
 					printings {
 						id
 						name
+						setName
 					}
 				}
 			}
