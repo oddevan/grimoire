@@ -2,7 +2,7 @@ import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
 import { GrimoireCard } from '../types/GrimoireCard';
 
 const apollo = new ApolloClient({
-  uri: 'https://grimoireapp.smolblog.com/graphql/',
+  uri: process.env.BUILD_DATA_URL,
   cache: new InMemoryCache()
 });
 
@@ -36,6 +36,11 @@ export async function getCardInfo(id: string) : Promise<GrimoireCard | undefined
 					hash
 					name
 					sku
+					guruId
+					printings {
+						id
+						name
+					}
 				}
 			}
     `
