@@ -55,9 +55,7 @@ export default function CardPage(card: GrimoireCard) {
 					<Printings printings={card.printings} />
 				</div>
 			</div>
-			<SmolblogProvider>
-				<UserInventory cardId={card.id} />
-			</SmolblogProvider>
+			<UserInventory cardId={card.id} />
 		</Fragment>
 	);
 }

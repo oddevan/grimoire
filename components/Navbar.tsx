@@ -1,5 +1,4 @@
 import Link from "next/link";
-import SmolblogProvider from "../contexts/SmolblogProvider";
 import User from "./User";
 
 export default function Navbar() {
@@ -37,9 +36,7 @@ export default function Navbar() {
 						</li>
 					</ul>
 					<div className="d-flex">
-						<SmolblogProvider>
-							<User />
-						</SmolblogProvider>
+						<User />
 					</div>
 				</div>
 			</div>
