@@ -27,7 +27,7 @@ export default function CardPage(card: GrimoireCard) {
 					<div className="row">
 						<div className="col-sm-6">
 							{card.imgUrl ? (
-								<Image
+								<img
 									src={card.imgUrl}
 									alt={card.name}
 									width="200"
