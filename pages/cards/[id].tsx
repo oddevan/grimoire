@@ -1,8 +1,7 @@
 import type { GetStaticPropsContext } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
 import { Fragment } from "react";
+import Printings from "../../components/Printings";
 import { getAllCardIds, getCardInfo } from "../../staticBuild";
 import { GrimoireCard } from "../../types/GrimoireCard";
 
@@ -30,6 +29,7 @@ export default function CardPage(card: GrimoireCard) {
 								<img
 									src={card.imgUrl}
 									alt={card.name}
+									className="img-fluid"
 									width="200"
 									height="278"
 								/>
@@ -37,39 +37,21 @@ export default function CardPage(card: GrimoireCard) {
 								<Fragment />
 							)}
 						</div>
-						<div className="col-sm-6"></div>
+						<div className="col-sm-6">
+							<dl className="row">
+								<dt className="col-lg-6">TCGplayer SKU:</dt>
+								<dd className="col-lg-6">{card.sku}</dd>
+								<dt className="col-lg-6">PokemonTCG.guru ID</dt>
+								<dd className="col-lg-6">{card.guruId}</dd>
+							</dl>
+						</div>
 					</div>
 				</div>
 				<div className="col-sm-6 col-lg-4 col-xl-3">
 					<div className="alert alert-primary">
 						Grimoire ID: <code>{card.id}</code>
 					</div>
-					{card.printings ? (
-						<div className="card">
-							<h3 className="card-header">Other printings</h3>
-							<div className="list-group-flush">
-								{card.printings.map((printing) => (
-									<Link key={printing.id} href={`/cards/${printing.id}`}>
-										<a className="list-group-item list-group-item-action">
-											{printing.name}
-											{printing.setName ? (
-												<Fragment>
-													<br />
-													<small className="text-muted">
-														{printing.setName}
-													</small>
-												</Fragment>
-											) : (
-												<Fragment />
-											)}
-										</a>
-									</Link>
-								))}
-							</div>
-						</div>
-					) : (
-						<Fragment />
-					)}
+					<Printings printings={card.printings} />
 				</div>
 			</div>
 		</Fragment>
