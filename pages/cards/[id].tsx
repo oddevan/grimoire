@@ -2,6 +2,7 @@ import type { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { Fragment } from "react";
 import Printings from "../../components/Printings";
+import UserInventory from "../../components/UserInventory";
 import { getAllCardIds, getCardInfo } from "../../staticBuild";
 import { GrimoireCard } from "../../types/GrimoireCard";
 
@@ -53,12 +54,7 @@ export default function CardPage(card: GrimoireCard) {
 					<Printings printings={card.printings} />
 				</div>
 			</div>
-
-			<div className="row justify-content-center">
-				<div className="col-md-8">
-					<h2 className="h3">My Inventory</h2>
-				</div>
-			</div>
+			<UserInventory />
 		</Fragment>
 	);
 }
