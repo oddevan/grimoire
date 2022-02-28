@@ -13,7 +13,7 @@ export default function Printings(props: PrintingsProps) {
 
 	return (
 		<div className="card">
-			<h3 className="card-header">Other printings</h3>
+			<h3 className="card-header h4">Other printings</h3>
 			<div className="list-group-flush">
 				{printings.map((printing) => (
 					<Link key={printing.id} href={`/cards/${printing.id}`}>

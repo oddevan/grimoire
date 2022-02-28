@@ -16,13 +16,12 @@ export default function CardPage(card: GrimoireCard) {
 				<title>{card.name} - Grimoire</title>
 			</Head>
 			<h1>
-				{card.name}
-				<br />
-				<small className="text-muted">{card.setName}</small>
+				{card.name} <small className="text-muted">{card.setName}</small>
 			</h1>
 
 			<div className="row">
 				<div className="col-sm-6 col-lg-8 col-xl-9">
+					<h2 className="visually-hidden">Card info</h2>
 					<div className="row">
 						<div className="col-sm-6">
 							{card.imgUrl ? (
@@ -52,6 +51,12 @@ export default function CardPage(card: GrimoireCard) {
 						Grimoire ID: <code>{card.id}</code>
 					</div>
 					<Printings printings={card.printings} />
+				</div>
+			</div>
+
+			<div className="row justify-content-center">
+				<div className="col-md-8">
+					<h2 className="h3">My Inventory</h2>
 				</div>
 			</div>
 		</Fragment>
