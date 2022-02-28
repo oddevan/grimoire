@@ -54,7 +54,7 @@ export default function CardPage(card: GrimoireCard) {
 					<Printings printings={card.printings} />
 				</div>
 			</div>
-			<UserInventory />
+			<UserInventory cardId={card.id} />
 		</Fragment>
 	);
 }
