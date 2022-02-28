@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Fragment } from "react";
 import Printings from "../../components/Printings";
 import UserInventory from "../../components/UserInventory";
+import SmolblogProvider from "../../contexts/SmolblogProvider";
 import { getAllCardIds, getCardInfo } from "../../staticBuild";
 import { GrimoireCard } from "../../types/GrimoireCard";
 
@@ -54,7 +55,9 @@ export default function CardPage(card: GrimoireCard) {
 					<Printings printings={card.printings} />
 				</div>
 			</div>
-			<UserInventory cardId={card.id} />
+			<SmolblogProvider>
+				<UserInventory cardId={card.id} />
+			</SmolblogProvider>
 		</Fragment>
 	);
 }
