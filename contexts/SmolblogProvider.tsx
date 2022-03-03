@@ -4,7 +4,6 @@ import {
 	InMemoryCache,
 } from "@apollo/client";
 import { createContext, Fragment, useContext, useState } from "react";
-import { Vault } from "@ultimate/vault";
 
 export interface SmolblogContextProps {
 	smolblogAccessCode: string;
@@ -25,10 +24,6 @@ export default function SmolblogProvider({ children = <Fragment /> }) {
 		new ApolloClient({ cache: new InMemoryCache() })
 	);
 
-	if (!global.window) return children;
-
-	const session = new Vault({ type: "session" });
-
 	const setSmolblogCode = (code: string) => {
 		setSmolblogAccessCode(code);
 		setApolloClient(
@@ -38,19 +33,12 @@ export default function SmolblogProvider({ children = <Fragment /> }) {
 				headers: { Authorization: `Bearer ${code}` },
 			})
 		);
-		session.set<string>("smolblogUser", code);
 	};
 
 	const logoutSmolblog = () => {
 		setSmolblogAccessCode("");
 		setApolloClient(new ApolloClient({ cache: new InMemoryCache() }));
-		session.removeAll();
 	};
-
-	if (!smolblogAccessCode) {
-		const userKey = session.get<string>("smolblogUser");
-		if (userKey) setSmolblogAccessCode(userKey);
-	}
 
 	return (
 		<SmolblogContext.Provider

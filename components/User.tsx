@@ -1,19 +1,27 @@
-import { ApolloConsumer } from "@apollo/client";
 import { Fragment, useState } from "react";
 import OAuth2Login from "react-simple-oauth2-login";
 import { useSmolblog } from "../contexts/SmolblogProvider";
-import { getCurrentUserInfo, UserInfo } from "../lib/smolblog/user";
+import { getCurrentUserInfo } from "../lib/smolblog/user";
+import { Vault } from "@ultimate/vault";
 
 const User = () => {
 	const { smolblogAccessCode, setSmolblogCode, apolloClient } = useSmolblog();
 	const [user, setUser] = useState({ username: "", displayName: "" });
+	const session = new Vault({ type: "session" });
 
 	const onSuccess = (res: any) => {
+		session.set<string>("smolblogUser", res.access_token);
 		setSmolblogCode(res.access_token);
 	};
 
-	if (!smolblogAccessCode && global.window) {
-		const redirectUri = `${window.location.protocol}//${window.location.hostname}/oauth-callback`;
+	if (!smolblogAccessCode) {
+		const userKey = session.get<string>("smolblogUser");
+		if (userKey) {
+			setSmolblogCode(userKey);
+			return <Fragment />;
+		}
+
+		const redirectUri = `${window.location.protocol}//${window.location.host}/oauth-callback`;
 
 		return (
 			<OAuth2Login

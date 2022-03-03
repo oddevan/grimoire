@@ -1,5 +1,7 @@
 import Link from "next/link";
-import User from "./User";
+import dynamic from "next/dynamic";
+
+const UserDynamic = dynamic(() => import("./User"), { ssr: false });
 
 export default function Navbar() {
 	return (
@@ -36,7 +38,7 @@ export default function Navbar() {
 						</li>
 					</ul>
 					<div className="d-flex">
-						<User />
+						<UserDynamic />
 					</div>
 				</div>
 			</div>
