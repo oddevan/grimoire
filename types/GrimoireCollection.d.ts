@@ -1,6 +1,12 @@
 export interface GrimoireCollection {
 	id: number;
 	name: string;
-	cards?: [GrimoireCard];
-	hashes?: [string];
+	cards?: [{
+		card: GrimoireCard,
+		quantity: number
+	}];
+	hashes?: [{
+		hash: string,
+		quantity: number
+	}];
 }
