@@ -5,7 +5,7 @@ import { getCurrentUserInfo } from "../lib/smolblog/user";
 import { Vault } from "@ultimate/vault";
 
 const User = () => {
-	const { smolblogAccessCode, setSmolblogCode, apolloClient } = useSmolblog();
+	const { smolblogAccessCode, setSmolblogCode } = useSmolblog();
 	const [user, setUser] = useState({ username: "", displayName: "" });
 	const session = new Vault({ type: "session" });
 
@@ -42,7 +42,7 @@ const User = () => {
 		);
 	}
 
-	getCurrentUserInfo(apolloClient)
+	getCurrentUserInfo(smolblogAccessCode)
 		.then((info) => info && setUser(info))
 		.catch((error) => console.error(error));
 

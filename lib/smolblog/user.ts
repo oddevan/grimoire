@@ -1,31 +1,22 @@
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client'
+import { smolblogGetSettings } from "./utils";
 
 export interface UserInfo {
 	username: string;
 	displayName: string;
 }
 
-export async function getCurrentUserInfo(apollo?: ApolloClient<NormalizedCacheObject>) : Promise<UserInfo | undefined> {
-  if (!apollo) return undefined;
+export async function getCurrentUserInfo(smolblogAccessCode: string) : Promise<UserInfo | undefined> {
+  if (!smolblogAccessCode) return undefined;
 	
-	const response = await apollo.query({
-    query: gql`
-      query MyQuery {
-				viewer {
-					username
-					name
-				}
-				contentTypes {
-					nodes {
-						name
-					}
-				}
-			}
-    `
-  });
+	const response = await fetch(
+		`https://grimoireapp.smolblog.com/wp-json/wp/v2/users/me`,
+		smolblogGetSettings(smolblogAccessCode),
+	);
+
+	const userData = await response.json();
 
   return response ? {
-		username: response.data.viewer.username,
-		displayName: response.data.viewer.name,
+		username: userData.slug,
+		displayName: userData.name,
 	} : undefined;
 }
