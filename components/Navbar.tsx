@@ -27,12 +27,12 @@ export default function Navbar() {
 				>
 					<ul className="navbar-nav">
 						<li className="nav-item">
-							<Link href="/catalog">
+							<Link href="/cards">
 								<a className="nav-link">Catalog</a>
 							</Link>
 						</li>
 						<li className="nav-item">
-							<Link href="/decks">
+							<Link href="#">
 								<a className="nav-link">Decks</a>
 							</Link>
 						</li>
