@@ -14,6 +14,11 @@ const User = () => {
 		setSmolblogCode(res.access_token);
 	};
 
+	const logout = () => {
+		session.remove("smolblogUser");
+		setSmolblogCode("");
+	};
+
 	if (!smolblogAccessCode) {
 		const userKey = session.get<string>("smolblogUser");
 		if (userKey) {
@@ -38,7 +43,12 @@ const User = () => {
 
 	if (user.displayName) {
 		return (
-			<span className="navbar-text">Logged in as {user.displayName ?? ""}</span>
+			<Fragment>
+				<span className="navbar-text">{user.displayName ?? ""}</span>
+				<button className="btn btn-outline-light ms-2" onClick={logout}>
+					Logout
+				</button>
+			</Fragment>
 		);
 	}
 
