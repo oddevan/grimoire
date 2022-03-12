@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState, useCallback } from "react";
 import OAuth2Login from "react-simple-oauth2-login";
 import { useSmolblog } from "../contexts/SmolblogProvider";
 import { getCurrentUserInfo } from "../lib/smolblog/user";
@@ -14,10 +14,26 @@ const User = () => {
 		setSmolblogCode(res.access_token);
 	};
 
-	const logout = () => {
+	const logout = useCallback(() => {
 		session.remove("smolblogUser");
 		setSmolblogCode("");
-	};
+	}, [session, setSmolblogCode]);
+
+	useEffect(() => {
+		getCurrentUserInfo(smolblogAccessCode)
+			.then((info) => info && setUser(info))
+			.catch((error) => {
+				logout();
+				console.error(error);
+			});
+	}, [logout, smolblogAccessCode]);
+
+	useEffect(() => {
+		const userKey = session.get<string>("smolblogUser");
+		if (!smolblogAccessCode && userKey) {
+			setSmolblogCode(userKey);
+		}
+	}, [session, setSmolblogCode, smolblogAccessCode]);
 
 	if (!smolblogAccessCode) {
 		const userKey = session.get<string>("smolblogUser");
@@ -51,10 +67,6 @@ const User = () => {
 			</Fragment>
 		);
 	}
-
-	getCurrentUserInfo(smolblogAccessCode)
-		.then((info) => info && setUser(info))
-		.catch((error) => console.error(error));
 
 	return <Fragment />;
 };

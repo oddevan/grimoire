@@ -14,6 +14,8 @@ export async function getUserCollectionsForCard(smolblogAccessCode: string, card
 		smolblogGetSettings(smolblogAccessCode),
 	);
 
+	if (!response.ok || !response.status) return [];
+
 	const collectionData = await response.json();
 
   return collectionData ? collectionData.map((lineItem: any) => {

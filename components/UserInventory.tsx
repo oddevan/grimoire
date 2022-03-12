@@ -1,5 +1,5 @@
 import { useSmolblog } from "../contexts/SmolblogProvider";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import InventoryLineItem from "./InventoryLineItem";
 import { GrimoireCard } from "../types/GrimoireCard";
 import {
@@ -18,13 +18,15 @@ export default function UserInventory(props: UserInventoryProps) {
 		[CardCollectionLineItem?]
 	>([]);
 
+	useEffect(() => {
+		getUserCollectionsForCard(smolblogAccessCode, card.id).then((result) =>
+			setInventoryItems(result ?? [])
+		);
+	}, [card, smolblogAccessCode]);
+
 	if (!smolblogAccessCode && global.window) {
 		return <Fragment />;
 	}
-
-	getUserCollectionsForCard(smolblogAccessCode, card.id).then((result) =>
-		setInventoryItems(result ?? [])
-	);
 
 	return (
 		<div className="row justify-content-center">
