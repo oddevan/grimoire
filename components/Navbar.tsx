@@ -31,11 +31,6 @@ export default function Navbar() {
 								<a className="nav-link">Catalog</a>
 							</Link>
 						</li>
-						<li className="nav-item">
-							<Link href="#">
-								<a className="nav-link">Decks</a>
-							</Link>
-						</li>
 					</ul>
 					<div className="d-flex">
 						<UserDynamic />

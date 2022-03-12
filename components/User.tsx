@@ -14,10 +14,11 @@ const User = () => {
 		setSmolblogCode(res.access_token);
 	};
 
-	const logout = useCallback(() => {
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const logout = () => {
 		session.remove("smolblogUser");
 		setSmolblogCode("");
-	}, [session, setSmolblogCode]);
+	};
 
 	useEffect(() => {
 		getCurrentUserInfo(smolblogAccessCode)
@@ -33,7 +34,9 @@ const User = () => {
 		if (!smolblogAccessCode && userKey) {
 			setSmolblogCode(userKey);
 		}
-	}, [session, setSmolblogCode, smolblogAccessCode]);
+		// Only want this to run on first render, so no dependencies.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	if (!smolblogAccessCode) {
 		const userKey = session.get<string>("smolblogUser");
