@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getCardCatalogInfo } from "../../staticBuild/smolblog";
+import { getCardCatalogInfo } from "../../lib/static/smolblog";
 import { GrimoireCard } from "../../types/GrimoireCard";
 
 interface CardCatalogPageProps {

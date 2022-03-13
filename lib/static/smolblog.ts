@@ -1,5 +1,5 @@
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
-import { GrimoireCard } from '../types/GrimoireCard';
+import { GrimoireCard } from '../../types/GrimoireCard';
 
 const apollo = new ApolloClient({
   uri: process.env.BUILD_DATA_URL,

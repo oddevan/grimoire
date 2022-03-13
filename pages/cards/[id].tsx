@@ -2,7 +2,7 @@ import type { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { Fragment } from "react";
 import Printings from "../../components/Printings";
-import { getAllCardIds, getCardInfo } from "../../staticBuild";
+import { getAllCardIds, getCardInfo } from "../../lib/static";
 import { GrimoireCard } from "../../types/GrimoireCard";
 import dynamic from "next/dynamic";
 
