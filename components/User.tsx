@@ -3,6 +3,9 @@ import OAuth2Login from "react-simple-oauth2-login";
 import { useSmolblog } from "../contexts/SmolblogProvider";
 import { getCurrentUserInfo } from "../lib/smolblog/user";
 import { Vault } from "@ultimate/vault";
+import UserLoggedOut from "./icons/UserLoggedOut";
+import { Nav, NavDropdown } from "react-bootstrap";
+import NBLink from "./NBLink";
 
 const User = () => {
 	const { smolblogAccessCode, setSmolblogCode } = useSmolblog();
@@ -48,25 +51,35 @@ const User = () => {
 		const redirectUri = `${window.location.protocol}//${window.location.host}/oauth-callback`;
 
 		return (
-			<OAuth2Login
-				authorizationUrl="https://grimoireapp.smolblog.com/oauth/authorize/"
-				responseType="token"
-				clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
-				redirectUri={redirectUri}
-				onSuccess={onSuccess}
-				onFailure={(res: any) => console.error(res)}
-				className="btn btn-outline-light"
-			/>
+			<Fragment>
+				<OAuth2Login
+					authorizationUrl="https://grimoireapp.smolblog.com/oauth/authorize/"
+					responseType="token"
+					clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
+					redirectUri={redirectUri}
+					onSuccess={onSuccess}
+					onFailure={(res: any) => console.error(res)}
+					className="btn btn-outline-light ms-2"
+				/>
+			</Fragment>
 		);
 	}
 
 	if (user.displayName) {
 		return (
 			<Fragment>
-				<span className="navbar-text">{user.displayName ?? ""}</span>
-				<button className="btn btn-outline-light ms-2" onClick={logout}>
-					Logout
-				</button>
+				<Nav>
+					<NavDropdown title={user.displayName ?? user.username}>
+						<NavDropdown.Item href={`/users/${user.username}`} as={NBLink}>
+							My Profile
+						</NavDropdown.Item>
+						<NavDropdown.Item href="/batch" as={NBLink}>
+							Batch Entry
+						</NavDropdown.Item>
+						<NavDropdown.Divider />
+						<NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+					</NavDropdown>
+				</Nav>
 			</Fragment>
 		);
 	}

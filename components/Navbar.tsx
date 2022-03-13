@@ -11,16 +11,14 @@ export default function GrimoireNavbar() {
 				<Navbar.Brand href="/" as={NBLink}>
 					Grimoire
 				</Navbar.Brand>
-				<Navbar.Toggle />
-				<Navbar.Collapse className="justify-content-md-end">
-					<Nav>
+				<Navbar.Toggle aria-controls="navbar-mobile-collapse" />
+				<Navbar.Collapse id="navbar-mobile-collapse">
+					<Nav className="me-auto">
 						<Nav.Link href="/cards" as={NBLink}>
 							Catalog
 						</Nav.Link>
 					</Nav>
-					<div className="d-flex">
-						<UserDynamic />
-					</div>
+					<UserDynamic />
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
