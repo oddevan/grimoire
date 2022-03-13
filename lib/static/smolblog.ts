@@ -27,7 +27,7 @@ export async function getAllCardIds() {
 	})
 }
 
-export async function getCardCatalogInfo() {
+export async function getCardCatalogInfo(): Promise<[GrimoireCard?]> {
 const { data } = await apollo.query({
     query: gql`
       query cardCatalog {

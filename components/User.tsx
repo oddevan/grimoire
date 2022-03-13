@@ -3,7 +3,6 @@ import OAuth2Login from "react-simple-oauth2-login";
 import { useSmolblog } from "../contexts/SmolblogProvider";
 import { getCurrentUserInfo } from "../lib/smolblog/user";
 import { Vault } from "@ultimate/vault";
-import UserLoggedOut from "./icons/UserLoggedOut";
 import { Nav, NavDropdown } from "react-bootstrap";
 import NBLink from "./NBLink";
 

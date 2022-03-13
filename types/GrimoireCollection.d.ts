@@ -5,8 +5,4 @@ export interface GrimoireCollection {
 		card: GrimoireCard,
 		quantity: number
 	}];
-	hashes?: [{
-		hash: string,
-		quantity: number
-	}];
 }
