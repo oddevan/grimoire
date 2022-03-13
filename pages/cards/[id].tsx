@@ -2,13 +2,18 @@ import type { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { Fragment } from "react";
 import Printings from "../../components/Printings";
-import UserInventory from "../../components/UserInventory";
 import { getAllCardIds, getCardInfo } from "../../staticBuild";
 import { GrimoireCard } from "../../types/GrimoireCard";
+import dynamic from "next/dynamic";
 
 type CardPageParams = {
 	id: string;
 };
+
+const DynamicUserInventory = dynamic(
+	() => import("../../components/UserInventory"),
+	{ ssr: false }
+);
 
 export default function CardPage(card: GrimoireCard) {
 	return (
@@ -54,7 +59,7 @@ export default function CardPage(card: GrimoireCard) {
 					<Printings printings={card.printings} />
 				</div>
 			</div>
-			<UserInventory card={card} />
+			<DynamicUserInventory card={card} />
 		</Fragment>
 	);
 }
