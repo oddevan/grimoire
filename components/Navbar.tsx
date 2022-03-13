@@ -1,42 +1,28 @@
-import Link from "next/link";
 import dynamic from "next/dynamic";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import NBLink from "./NBLink";
 
 const UserDynamic = dynamic(() => import("./User"), { ssr: false });
 
-export default function Navbar() {
+export default function GrimoireNavbar() {
 	return (
-		<nav className="navbar navbar-expand-md navbar-dark bg-primary">
-			<div className="container">
-				<Link href="/">
-					<a className="navbar-brand">Grimoire</a>
-				</Link>
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span className="navbar-toggler-icon"></span>
-				</button>
-				<div
-					className="collapse navbar-collapse justify-content-md-end"
-					id="navbarSupportedContent"
-				>
-					<ul className="navbar-nav">
-						<li className="nav-item">
-							<Link href="/cards">
-								<a className="nav-link">Catalog</a>
-							</Link>
-						</li>
-					</ul>
+		<Navbar variant="dark" bg="primary" expand="md">
+			<Container>
+				<Navbar.Brand href="/" as={NBLink}>
+					Grimoire
+				</Navbar.Brand>
+				<Navbar.Toggle />
+				<Navbar.Collapse className="justify-content-md-end">
+					<Nav>
+						<Nav.Link href="/cards" as={NBLink}>
+							Catalog
+						</Nav.Link>
+					</Nav>
 					<div className="d-flex">
 						<UserDynamic />
 					</div>
-				</div>
-			</div>
-		</nav>
+				</Navbar.Collapse>
+			</Container>
+		</Navbar>
 	);
 }

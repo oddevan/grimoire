@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Fragment } from "react";
+import { Col, Row } from "react-bootstrap";
 import { getCardCatalogInfo } from "../../lib/static/smolblog";
 import { GrimoireCard } from "../../types/GrimoireCard";
 
@@ -40,11 +41,11 @@ export default function CardCatalogPage(props: CardCatalogPageProps) {
 			</Head>
 			<h1>Card Catalog</h1>
 
-			<div className="row">
+			<Row>
 				{sets.map((set) => {
 					if (!set) return <Fragment />;
 					return (
-						<div key={set.slug} className="col-sm-6 col-md-4 col-lg-3">
+						<Col key={set.slug} sm="6" md="4" lg="3">
 							<h3>{set.name}</h3>
 							<ul>
 								{set.cards.map((card) => {
@@ -60,10 +61,10 @@ export default function CardCatalogPage(props: CardCatalogPageProps) {
 									);
 								})}
 							</ul>
-						</div>
+						</Col>
 					);
 				})}
-			</div>
+			</Row>
 		</Fragment>
 	);
 }

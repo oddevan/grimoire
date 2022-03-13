@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import SmolblogProvider from "../contexts/SmolblogProvider";
 import { Fragment } from "react";
+import { Container } from "react-bootstrap";
 
 export default function MainLayout(props: any) {
 	const { children } = props;
@@ -9,7 +10,7 @@ export default function MainLayout(props: any) {
 		<SmolblogProvider>
 			<Fragment>
 				<Navbar />
-				<main className="container">{children}</main>
+				<Container as="main">{children}</Container>
 				<hr />
 				<p style={{ textAlign: "center", fontSize: "0.5em" }}>
 					Built by <a href="https://www.oddevan.com/">oddEvan</a> in South
@@ -20,7 +21,7 @@ export default function MainLayout(props: any) {
 					<br />
 					All Pok&eacute;mon elements &trade; and &copy; The Pok&eacute;mon
 					Company. This site is not affiliated with or endorsed by The
-					Pok&eacute;mon Company, its affiliates or subsidiaries.
+					Pok&eacute;mon Company, its affiliates, parents, or subsidiaries.
 				</p>
 			</Fragment>
 		</SmolblogProvider>

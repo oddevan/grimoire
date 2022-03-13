@@ -3,6 +3,7 @@ import { setCardQuantity } from "../lib/smolblog/collection";
 import { GrimoireCard } from "../types/GrimoireCard";
 import { GrimoireCollection } from "../types/GrimoireCollection";
 import { useSmolblog } from "../contexts/SmolblogProvider";
+import { Row, Col } from "react-bootstrap";
 
 export interface InventoryLineItemProps {
 	card: GrimoireCard;
@@ -38,9 +39,11 @@ export default function InventoryLineItem(props: InventoryLineItemProps) {
 	};
 
 	return (
-		<div className={`row ${className}`}>
-			<div className="col-auto">{showCard ? card.name : collection.name}</div>
-			<div className="col-auto">
+		<Row className={className}>
+			<Col sm="8" md="6" lg="8" xl="9">
+				{showCard ? card.name : collection.name}
+			</Col>
+			<Col sm="4" lg="2">
 				<label
 					htmlFor={`${card}-${collection}-quantity`}
 					className="visually-hidden"
@@ -56,10 +59,10 @@ export default function InventoryLineItem(props: InventoryLineItemProps) {
 					onBlur={onBlur}
 					disabled={isBusy}
 				/>
-			</div>
-			<div className="col-auto">
+			</Col>
+			<Col md="2" xl="1">
 				{isBusy && <span className="text-muted">Saving...</span>}
-			</div>
-		</div>
+			</Col>
+		</Row>
 	);
 }

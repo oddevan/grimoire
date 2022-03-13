@@ -6,6 +6,7 @@ import {
 	CardCollectionLineItem,
 	getUserCollectionsForCard,
 } from "../lib/smolblog/card";
+import { Col, Row } from "react-bootstrap";
 
 export interface UserInventoryProps {
 	card: GrimoireCard;
@@ -29,8 +30,8 @@ export default function UserInventory(props: UserInventoryProps) {
 	}
 
 	return (
-		<div className="row justify-content-center">
-			<div className="col-md-8">
+		<Row className="justify-content-center">
+			<Col md="8">
 				<h2 className="h3">My Inventory</h2>
 				{inventoryItems.map(
 					(lineItem) =>
@@ -43,7 +44,7 @@ export default function UserInventory(props: UserInventoryProps) {
 							/>
 						)
 				)}
-			</div>
-		</div>
+			</Col>
+		</Row>
 	);
 }
