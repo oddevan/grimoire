@@ -1,12 +1,17 @@
 import { GetStaticPropsContext } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import React, { Fragment, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import BatchEntrySelect from "../../components/BatchEntrySelect";
 import { useSmolblog } from "../../contexts/SmolblogProvider";
 import { getCardCatalogInfo } from "../../lib/static/smolblog";
 import { GrimoireCard } from "../../types/GrimoireCard";
 import { GrimoireCollection } from "../../types/GrimoireCollection";
+
+const DynamicBatchEntrySelect = dynamic(
+	() => import("../../components/BatchEntrySelect"),
+	{ ssr: false }
+);
 
 interface BatchEntrySetPageProps {
 	cards: [GrimoireCard?];
@@ -18,7 +23,6 @@ export default function BatchEntrySet(props: BatchEntrySetPageProps) {
 	const [collection, setCollection] = useState<
 		GrimoireCollection | undefined
 	>();
-	const { smolblogAccessCode } = useSmolblog();
 
 	return (
 		<Fragment>
@@ -29,7 +33,7 @@ export default function BatchEntrySet(props: BatchEntrySetPageProps) {
 
 			<Row className="justify-content-center">
 				<Col md="8">
-					<BatchEntrySelect />
+					<DynamicBatchEntrySelect setCollection={setCollection} />
 					{collection ? (
 						<p>Populate it!</p>
 					) : (
