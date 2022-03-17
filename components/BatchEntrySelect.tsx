@@ -10,7 +10,8 @@ export default function BatchEntrySelect(props: { setCollection: Function }) {
 	const [busy, setBusy] = useState(false);
 
 	const onChange = (event: SyntheticEvent<HTMLSelectElement, Event>) => {
-		const collectionId = event.target.value || 0;
+		const dropdown = event.target as HTMLSelectElement;
+		const collectionId = dropdown.value || 0;
 		const selectedCollection = collections.find(
 			(collection) => collection?.id == collectionId
 		);
