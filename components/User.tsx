@@ -3,7 +3,7 @@ import OAuth2Login from "react-simple-oauth2-login";
 import { useSmolblog } from "../contexts/SmolblogProvider";
 import { getCurrentUserInfo } from "../lib/smolblog/user";
 import { Vault } from "@ultimate/vault";
-import { Nav, NavDropdown } from "react-bootstrap";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import NBLink from "./NBLink";
 
 const User = () => {
@@ -16,7 +16,6 @@ const User = () => {
 		setSmolblogCode(res.access_token);
 	};
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const logout = () => {
 		session.remove("smolblogUser");
 		setSmolblogCode("");
@@ -29,7 +28,8 @@ const User = () => {
 				logout();
 				console.error(error);
 			});
-	}, [logout, smolblogAccessCode]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [smolblogAccessCode]);
 
 	useEffect(() => {
 		const userKey = session.get<string>("smolblogUser");
@@ -41,12 +41,6 @@ const User = () => {
 	}, []);
 
 	if (!smolblogAccessCode) {
-		const userKey = session.get<string>("smolblogUser");
-		if (userKey) {
-			setSmolblogCode(userKey);
-			return <Fragment />;
-		}
-
 		const redirectUri = `${window.location.protocol}//${window.location.host}/oauth-callback`;
 
 		return (
@@ -56,6 +50,7 @@ const User = () => {
 					responseType="token"
 					clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
 					redirectUri={redirectUri}
+					isCrossOrigin
 					onSuccess={onSuccess}
 					onFailure={(res: any) => console.error(res)}
 					className="btn btn-outline-light ms-2"
@@ -83,7 +78,7 @@ const User = () => {
 		);
 	}
 
-	return <Fragment />;
+	return <Navbar.Text>Loading...</Navbar.Text>;
 };
 
 export default User;
