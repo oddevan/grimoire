@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { setCardQuantity } from "../lib/smolblog/collection";
 import { GrimoireCard } from "../types/GrimoireCard";
 import { GrimoireCollection } from "../types/GrimoireCollection";
@@ -41,7 +41,13 @@ export default function InventoryLineItem(props: InventoryLineItemProps) {
 	return (
 		<Row className={className}>
 			<Col sm="8" md="6" lg="8" xl="9">
-				{showCard ? card.name : collection.name}
+				{showCard ? (
+					<Fragment>
+						{card.name} <code>{card.id}</code>
+					</Fragment>
+				) : (
+					collection.name
+				)}
 			</Col>
 			<Col sm="4" lg="2">
 				<label

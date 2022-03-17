@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useSmolblog } from "../contexts/SmolblogProvider";
 import { getUserCollections } from "../lib/smolblog/collection";
@@ -9,11 +9,20 @@ export default function BatchEntrySelect(props: { setCollection: Function }) {
 	const [collections, setCollections] = useState<[GrimoireCollection?]>([]);
 	const [busy, setBusy] = useState(false);
 
+	const onChange = (event: SyntheticEvent<HTMLSelectElement, Event>) => {
+		const collectionId = event.target.value || 0;
+		const selectedCollection = collections.find(
+			(collection) => collection?.id == collectionId
+		);
+
+		props.setCollection(selectedCollection);
+	};
+
 	useEffect(() => {
 		setBusy(true);
 		getUserCollections(smolblogAccessCode)
-			.then((collections) => {
-				setCollections(collections);
+			.then((userCollections) => {
+				setCollections(userCollections);
 				setBusy(false);
 			})
 			.catch((error) => console.log(error));
@@ -32,17 +41,23 @@ export default function BatchEntrySelect(props: { setCollection: Function }) {
 	}
 
 	if (!busy) {
-		<Form.Select className="my-4" aria-label="Select a collection">
-			<option>Select a collection</option>
-			{collections.map((collection) => {
-				if (!collection) return;
-				return (
-					<option key={`col-option-${collection.id}`} value={collection.id}>
-						{collection.name}
-					</option>
-				);
-			})}
-		</Form.Select>;
+		return (
+			<Form.Select
+				className="my-4"
+				aria-label="Select a collection"
+				onChange={onChange}
+			>
+				<option>Select a collection</option>
+				{collections.map((collection) => {
+					if (!collection) return;
+					return (
+						<option key={`col-option-${collection.id}`} value={collection.id}>
+							{collection.name}
+						</option>
+					);
+				})}
+			</Form.Select>
+		);
 	}
 
 	return (
