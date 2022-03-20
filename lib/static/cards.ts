@@ -1,12 +1,7 @@
-import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
+import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client'
 import { GrimoireCard } from '../../types/GrimoireCard';
 
-const apollo = new ApolloClient({
-  uri: process.env.BUILD_DATA_URL,
-  cache: new InMemoryCache()
-});
-
-export async function getAllCardIds() {
+export async function getAllCardIdsWithClient(apollo: ApolloClient<NormalizedCacheObject>) {
 	interface queryResult {
 		__typename: String,
 		id: String
@@ -27,7 +22,7 @@ export async function getAllCardIds() {
 	})
 }
 
-export async function getCardCatalogInfo(): Promise<[GrimoireCard?]> {
+export async function getCardCatalogInfoWithClient(apollo: ApolloClient<NormalizedCacheObject>): Promise<[GrimoireCard?]> {
 const { data } = await apollo.query({
     query: gql`
       query cardCatalog {
@@ -44,7 +39,7 @@ const { data } = await apollo.query({
 	return data.card || [];
 }
 
-export async function getCardInfo(id: string) : Promise<GrimoireCard | undefined> {
+export async function getCardInfoWithClient(id: string, apollo: ApolloClient<NormalizedCacheObject>) : Promise<GrimoireCard | undefined> {
 	const { data } = await apollo.query({
     query: gql`
       query cardInfo {
