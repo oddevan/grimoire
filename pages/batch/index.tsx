@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getCardCatalogInfo } from "../../lib/static/smolblog";
+import { getCardCatalogInfo } from "../../lib/static";
 
 interface Set {
 	name: string;

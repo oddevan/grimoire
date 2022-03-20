@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Fragment } from "react";
 import { Col, Row } from "react-bootstrap";
-import { getCardCatalogInfo } from "../../lib/static/smolblog";
+import { getCardCatalogInfo } from "../../lib/static";
 import { GrimoireCard } from "../../types/GrimoireCard";
 
 interface CardCatalogPageProps {

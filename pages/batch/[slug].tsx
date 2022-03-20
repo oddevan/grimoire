@@ -4,8 +4,7 @@ import Head from "next/head";
 import React, { Fragment, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import InventoryLineItem from "../../components/InventoryLineItem";
-import { useSmolblog } from "../../contexts/SmolblogProvider";
-import { getCardCatalogInfo } from "../../lib/static/smolblog";
+import { getCardCatalogInfo } from "../../lib/static";
 import { GrimoireCard } from "../../types/GrimoireCard";
 import { GrimoireCollection } from "../../types/GrimoireCollection";
 

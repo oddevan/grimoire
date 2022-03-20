@@ -1,3 +1,3 @@
-import { getAllCardIds, getCardInfo } from "./smolblog"
+import { getAllCardIds, getCardInfo, getCardCatalogInfo } from "./cards"
 
-export { getAllCardIds, getCardInfo }
+export { getAllCardIds, getCardInfo, getCardCatalogInfo }
