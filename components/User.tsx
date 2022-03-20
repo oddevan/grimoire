@@ -50,7 +50,6 @@ const User = () => {
 					responseType="token"
 					clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
 					redirectUri={redirectUri}
-					isCrossOrigin
 					onSuccess={onSuccess}
 					onFailure={(res: any) => console.error(res)}
 					className="btn btn-outline-light ms-2"
