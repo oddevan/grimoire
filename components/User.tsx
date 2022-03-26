@@ -5,16 +5,12 @@ import { getCurrentUserInfo } from "../lib/smolblog/user";
 import { Vault } from "@ultimate/vault";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import NBLink from "./NBLink";
+import SmolblogLogin from "./SmolblogLogin";
 
 const User = () => {
 	const { smolblogAccessCode, setSmolblogCode } = useSmolblog();
 	const [user, setUser] = useState({ username: "", displayName: "" });
 	const session = new Vault({ type: "session" });
-
-	const onSuccess = (res: any) => {
-		session.set<string>("smolblogUser", res.access_token);
-		setSmolblogCode(res.access_token);
-	};
 
 	const logout = () => {
 		session.remove("smolblogUser");
@@ -41,24 +37,7 @@ const User = () => {
 	}, []);
 
 	if (!smolblogAccessCode) {
-		const redirectUri = `${window.location.protocol}//${window.location.host}/oauth-callback`;
-
-		return (
-			<Fragment>
-				<OAuth2Login
-					authorizationUrl={
-						process.env.NEXT_PUBLIC_SMOLBLOG_OAUTH_ENDPOINT ??
-						"https://grimoireapp.smolblog.com/oauth/authorize/"
-					}
-					responseType="token"
-					clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
-					redirectUri={redirectUri}
-					onSuccess={onSuccess}
-					onFailure={(res: any) => console.error(res)}
-					className="btn btn-outline-light ms-2"
-				/>
-			</Fragment>
-		);
+		return <SmolblogLogin className="btn btn-outline-light ms-2" />;
 	}
 
 	if (user.displayName) {
@@ -66,7 +45,7 @@ const User = () => {
 			<Fragment>
 				<Nav>
 					<NavDropdown title={user.displayName ?? user.username}>
-						<NavDropdown.Item href={`/users/${user.username}`} as={NBLink}>
+						<NavDropdown.Item href={`/profile`} as={NBLink}>
 							My Profile
 						</NavDropdown.Item>
 						<NavDropdown.Item href="/batch" as={NBLink}>
