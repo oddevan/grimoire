@@ -31,7 +31,7 @@ export async function getUserCollections(smolblogAccessCode: string): Promise<[G
 	if (!smolblogAccessCode) return [];
 
 	const response = await fetch(
-		 'https://grimoireapp.smolblog.com/wp-json/grimoire/v1/collection/usercollections',
+		 `${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/usercollections`,
 		 smolblogGetSettings(smolblogAccessCode)
 	);
 	const collections = await response.json();

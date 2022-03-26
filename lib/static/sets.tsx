@@ -11,7 +11,7 @@ export async function getSetSlugsWithClient(
 
 	const { data } = await apollo.query({
 		query: gql`
-			query cardSlugs {
+			query setSlugs {
 				card {
 					setSlug
 				}

@@ -46,7 +46,10 @@ const User = () => {
 		return (
 			<Fragment>
 				<OAuth2Login
-					authorizationUrl="https://grimoireapp.smolblog.com/oauth/authorize/"
+					authorizationUrl={
+						process.env.NEXT_PUBLIC_SMOLBLOG_OAUTH_ENDPOINT ??
+						"https://grimoireapp.smolblog.com/oauth/authorize/"
+					}
 					responseType="token"
 					clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
 					redirectUri={redirectUri}

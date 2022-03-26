@@ -10,7 +10,7 @@ export async function getUserCollectionsForCard(smolblogAccessCode: string, card
 	if (!smolblogAccessCode || !cardId) return [];
 	
 	const response = await fetch(
-		`https://grimoireapp.smolblog.com/wp-json/grimoire/v1/card/${cardId}/usercollections`,
+		`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}card/${cardId}/usercollections`,
 		smolblogGetSettings(smolblogAccessCode),
 	);
 

@@ -48,7 +48,6 @@ export async function getCardInfoWithClient(id: string, apollo: ApolloClient<Nor
 					hash
 					name
 					sku
-					guruId
 					imgUrl
 					setName
 					printings {
