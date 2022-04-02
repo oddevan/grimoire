@@ -1,16 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getCardCatalogInfo } from "../../lib/static";
+import { getSets } from "../../lib/static";
+import { GrimoireSet } from "../../types/GrimoireSet";
 
-interface Set {
-	name: string;
-	slug: string;
-}
-
-export default function BatchEntryIndex(props: { sets: [Set?] }) {
+export default function BatchEntryIndex(props: { sets: [GrimoireSet?] }) {
 	const { sets } = props;
-
 	return (
 		<Fragment>
 			<Head>
@@ -35,16 +30,7 @@ export default function BatchEntryIndex(props: { sets: [Set?] }) {
 }
 
 export async function getStaticProps() {
-	const catalog = await getCardCatalogInfo();
-	const sets: [Set?] = [];
-
-	catalog.forEach((card) => {
-		if (!card || sets.find((set) => set?.slug === card.setSlug)) return;
-		sets.push({
-			name: card.setName ?? "",
-			slug: card.setSlug ?? "",
-		});
-	});
+	const sets = await getSets();
 
 	return { props: { sets } };
 }

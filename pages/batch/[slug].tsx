@@ -5,24 +5,21 @@ import React, { Fragment, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import InventoryLineItem from "../../components/InventoryLineItem";
 import { getSetCards, getSetSlugs } from "../../lib/static";
-import { GrimoireCard } from "../../types/GrimoireCard";
 import { GrimoireCollection } from "../../types/GrimoireCollection";
+import { GrimoireSet } from "../../types/GrimoireSet";
 
 const DynamicBatchEntrySelect = dynamic(
 	() => import("../../components/BatchEntrySelect"),
 	{ ssr: false }
 );
 
-interface BatchEntrySetPageProps {
-	cards: [GrimoireCard?];
-	name: string;
-}
-
-export default function BatchEntrySet(props: BatchEntrySetPageProps) {
+export default function BatchEntrySet(props: GrimoireSet) {
 	const { cards, name } = props;
 	const [collection, setCollection] = useState<
 		GrimoireCollection | undefined
 	>();
+
+	if (!cards) return <p className="text-muted">This set is empty.</p>;
 
 	return (
 		<Fragment>
@@ -85,14 +82,14 @@ export default function BatchEntrySet(props: BatchEntrySetPageProps) {
 
 export async function getStaticProps({
 	params,
-}: GetStaticPropsContext): Promise<{ props: BatchEntrySetPageProps }> {
-	if (!params) return { props: { cards: [], name: "" } };
+}: GetStaticPropsContext): Promise<{ props: GrimoireSet }> {
+	if (!params) return { props: { cards: [], name: "", slug: "" } };
 
-	const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+	const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug ?? "";
 	const cards = await getSetCards(slug ?? "");
 	const name = cards[0]?.setName ?? slug ?? "";
 
-	return { props: { cards, name } };
+	return { props: { cards, name, slug } };
 }
 
 export async function getStaticPaths() {
