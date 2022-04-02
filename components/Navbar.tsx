@@ -14,7 +14,7 @@ export default function GrimoireNavbar() {
 				<Navbar.Toggle aria-controls="navbar-mobile-collapse" />
 				<Navbar.Collapse id="navbar-mobile-collapse">
 					<Nav className="me-auto">
-						<Nav.Link href="/cards" as={NBLink}>
+						<Nav.Link href="/sets" as={NBLink}>
 							Catalog
 						</Nav.Link>
 					</Nav>
