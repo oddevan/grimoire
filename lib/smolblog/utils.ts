@@ -8,7 +8,7 @@ export function smolblogGetSettings(smolblogAccessCode: string): RequestInit {
 
 export function smolblogPostSettings(smolblogAccessCode: string): RequestInit {
 	return {
-		method: 'GET',
+		method: 'POST',
 		headers: { Authorization: `Bearer ${smolblogAccessCode}` },
 		credentials: 'omit'
 	};

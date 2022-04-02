@@ -9,12 +9,12 @@ export async function setCardQuantity(cardId: string, collectionId: number, quan
 	) return undefined;
 
 	const response = await fetch(
-		`https://grimoireapp.smolblog.com/wp-json/grimoire/v1/collection/${collectionId}/updatecardquantity?card_id=${cardId}&quantity=${quantity}`,
+		`https://grimoireapp.smolblog.com/wp-json/grimoire/v1/collection/${collectionId}/updatecardquantity`,
 		{
-			// body: JSON.stringify({
-			// 	card_id: cardId,
-			// 	quantity
-			// }),
+			body: JSON.stringify({
+				card_id: cardId,
+				quantity
+			}),
 			...smolblogPostSettings(smolblogAccessCode)
 		}
 	);
