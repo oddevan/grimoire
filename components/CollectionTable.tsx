@@ -31,18 +31,26 @@ export default function CollectionTable(props: {
 				Header: "Quantity",
 				accessor: (row: GrimoireCollectionEntry) => row.quantity,
 			},
+			{
+				Header: "Market",
+				accessor: (row: GrimoireCollectionEntry) =>
+					row.card.price ? (
+						`\$${row.card.price}`
+					) : (
+						<span className="text-muted">N/A</span>
+					),
+			},
 		],
 		[]
 	);
-	const reactTableInstance = useTable(
-		{
-			columns: tableColumns,
-			data: tableEntries,
-		},
-		useSortBy
-	);
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-		reactTableInstance;
+		useTable(
+			{
+				columns: tableColumns,
+				data: tableEntries,
+			},
+			useSortBy
+		);
 
 	return (
 		<BSTable striped hover {...getTableProps()}>

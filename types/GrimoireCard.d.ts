@@ -7,5 +7,6 @@ export interface GrimoireCard {
 	sku?: number,
 	guruId?: string,
 	hash?: string,
+	price?: number,
 	printings?: [GrimoireCard],
 }

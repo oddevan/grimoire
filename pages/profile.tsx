@@ -43,7 +43,7 @@ export default function ProfilePage() {
 			<h1>Profile Page</h1>
 
 			<Row className="justify-content-center">
-				<Col md="8">
+				<Col xl="10" xxl="9">
 					{smolblogAccessCode ? (
 						""
 					) : (
