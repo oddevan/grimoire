@@ -6,6 +6,7 @@ import {
 	UseSortByColumnProps,
 } from "react-table";
 import { GrimoireCollectionEntry } from "../types/GrimoireCollection";
+import { Table as BSTable } from "react-bootstrap";
 
 type SortableColumn = HeaderGroup<GrimoireCollectionEntry> &
 	Partial<UseSortByColumnProps<GrimoireCollectionEntry>>;
@@ -44,7 +45,7 @@ export default function CollectionTable(props: {
 		reactTableInstance;
 
 	return (
-		<table className="table table-striped table-hover" {...getTableProps()}>
+		<BSTable striped hover {...getTableProps()}>
 			<thead>
 				{headerGroups.map((headerGroup) => (
 					// eslint-disable-next-line react/jsx-key
@@ -94,6 +95,6 @@ export default function CollectionTable(props: {
 					);
 				})}
 			</tbody>
-		</table>
+		</BSTable>
 	);
 }
