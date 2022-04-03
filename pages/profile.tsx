@@ -22,12 +22,17 @@ export default function ProfilePage() {
 
 	useEffect(() => {
 		if (!smolblogAccessCode) return;
-		getCurrentUserInfo(smolblogAccessCode).then(setUser);
+		getCurrentUserInfo(smolblogAccessCode)
+			.then(setUser)
+			.catch((error) => console.log(`Error from Smolblog: ${error}`));
 	}, [smolblogAccessCode]);
 
 	useEffect(() => {
 		if (!user) return;
-		getUserCollections(smolblogAccessCode).then(setCollections);
+		getUserCollections(smolblogAccessCode)
+			.then(setCollections)
+			.catch((error) => console.log(`Error from Smolblog: ${error}`));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
 	return (

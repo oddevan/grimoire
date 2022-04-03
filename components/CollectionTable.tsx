@@ -1,35 +1,47 @@
 import { useMemo } from "react";
-import { useTable, useSortBy } from "react-table";
+import {
+	useTable,
+	useSortBy,
+	HeaderGroup,
+	UseSortByColumnProps,
+} from "react-table";
 import { GrimoireCollectionEntry } from "../types/GrimoireCollection";
+
+type SortableColumn = HeaderGroup<GrimoireCollectionEntry> &
+	Partial<UseSortByColumnProps<GrimoireCollectionEntry>>;
 
 export default function CollectionTable(props: {
 	cards: GrimoireCollectionEntry[];
 }) {
-	const flattenedEntries = useMemo(
-		() =>
-			props.cards.map((entry) => {
-				return { quantity: entry.quantity, ...entry.card };
-			}),
-		[props.cards]
-	);
+	const tableEntries = useMemo(() => props.cards, [props.cards]);
 
 	const tableColumns = useMemo(
 		() => [
-			{ Header: "ID", accessor: "id" },
-			{ Header: "Card", accessor: "name" },
-			{ Header: "Set", accessor: "setName" },
-			{ Header: "Quantity", accessor: "quantity", defaultCanSort: true },
+			{ Header: "ID", accessor: (row: GrimoireCollectionEntry) => row.card.id },
+			{
+				Header: "Card",
+				accessor: (row: GrimoireCollectionEntry) => row.card.name,
+			},
+			{
+				Header: "Set",
+				accessor: (row: GrimoireCollectionEntry) => row.card.setName,
+			},
+			{
+				Header: "Quantity",
+				accessor: (row: GrimoireCollectionEntry) => row.quantity,
+			},
 		],
 		[]
 	);
+	const reactTableInstance = useTable(
+		{
+			columns: tableColumns,
+			data: tableEntries,
+		},
+		useSortBy
+	);
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-		useTable(
-			{
-				columns: tableColumns,
-				data: flattenedEntries,
-			},
-			useSortBy
-		);
+		reactTableInstance;
 
 	return (
 		<table className="table table-striped table-hover" {...getTableProps()}>
@@ -37,11 +49,15 @@ export default function CollectionTable(props: {
 				{headerGroups.map((headerGroup) => (
 					// eslint-disable-next-line react/jsx-key
 					<tr {...headerGroup.getHeaderGroupProps()}>
-						{headerGroup.headers.map((column) => (
+						{headerGroup.headers.map((column: SortableColumn) => (
 							// eslint-disable-next-line react/jsx-key
 							<th
 								scope="column"
-								{...column.getHeaderProps(column.getSortByToggleProps())}
+								{...column.getHeaderProps(
+									column.getSortByToggleProps
+										? column.getSortByToggleProps()
+										: undefined
+								)}
 							>
 								{column.render("Header")}
 								<span>
