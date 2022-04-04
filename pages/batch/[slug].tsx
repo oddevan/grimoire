@@ -35,7 +35,7 @@ export default function BatchEntrySet(props: GrimoireSet) {
 						? cards.map((card) => {
 								if (!card) return;
 								const setEntry = collection.cards?.find(
-									(entry) => entry.card.id == card.id
+									(entry) => entry?.card.id == card.id
 								);
 								const quantity = setEntry?.quantity || 0;
 
