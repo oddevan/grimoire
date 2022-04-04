@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import { Accordion, Col, Row } from "react-bootstrap";
 import CollectionTable from "../components/CollectionTable";
 import { getUserCollections } from "../lib/smolblog/collection";
+import CreateCollectionModal from "../components/CreateCollectionModal";
 
 const LoginDynamic = dynamic(() => import("../components/SmolblogLogin"), {
 	ssr: false,
@@ -28,12 +29,17 @@ export default function ProfilePage() {
 	}, [smolblogAccessCode]);
 
 	useEffect(() => {
+		refreshCollections();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
+	const refreshCollections = () => {
 		if (!user) return;
+		setCollections([]);
 		getUserCollections(smolblogAccessCode)
 			.then(setCollections)
 			.catch((error) => console.log(`Error from Smolblog: ${error}`));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
+	};
 
 	return (
 		<Fragment>
@@ -99,6 +105,13 @@ export default function ProfilePage() {
 							);
 						})}
 					</Accordion>
+
+					<p className="text-end">
+						<CreateCollectionModal
+							smolblogAccessCode={smolblogAccessCode}
+							onSuccess={refreshCollections}
+						/>
+					</p>
 				</Col>
 			</Row>
 		</Fragment>

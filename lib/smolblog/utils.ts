@@ -9,7 +9,7 @@ export function smolblogGetSettings(smolblogAccessCode: string): RequestInit {
 export function smolblogPostSettings(smolblogAccessCode: string): RequestInit {
 	return {
 		method: 'POST',
-		headers: { Authorization: `Bearer ${smolblogAccessCode}` },
-		credentials: 'omit'
+		headers: { Authorization: `Bearer ${smolblogAccessCode}`, 'Content-type': 'application/json' },
+		credentials: 'omit',
 	};
 }
