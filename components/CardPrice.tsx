@@ -6,6 +6,7 @@ export default function CardPrice(params: {id: string}) {
     const { id } = params;
 
     useEffect((() => {
+        setPrice(-1);
         fetch(`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}card/${id}/usercollections`)
             .then(response => response.json())
             .then(body => setPrice(body.price))
@@ -15,6 +16,6 @@ export default function CardPrice(params: {id: string}) {
     if ( price < 0 ) return <Fragment />;
 
     return (
-        <Alert variant="success">Today&apos;s market price: ${price}</Alert>
+        <Alert variant="success">Today&apos;s market price: {`\$${price}`}</Alert>
     );
 }
