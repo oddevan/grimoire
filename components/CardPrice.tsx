@@ -1,5 +1,6 @@
 import { useState, Fragment, useEffect } from "react";
 import { Alert } from "react-bootstrap";
+import { getCardPrice } from "../lib/smolblog/card";
 
 export default function CardPrice(params: { id: string }) {
 	const [price, setPrice] = useState<number>(-1);
@@ -7,15 +8,12 @@ export default function CardPrice(params: { id: string }) {
 
 	useEffect(() => {
 		setPrice(-1);
-		fetch(
-			`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}card/${id}/usercollections`
-		)
-			.then((response) => response.json())
-			.then((body) => setPrice(body.price))
+		getCardPrice(id)
+			.then((priceValue) => setPrice(priceValue))
 			.catch((error) => console.error(error));
 	}, [id]);
 
-	if (price < 0) return <Fragment />;
+	if (!price || price < 0) return <Fragment />;
 
 	return (
 		<Alert variant="success">Today&apos;s market price: {`\$${price}`}</Alert>
