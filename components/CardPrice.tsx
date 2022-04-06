@@ -15,6 +15,6 @@ export default function CardPrice(params: {id: string}) {
     if ( price < 0 ) return <Fragment />;
 
     return (
-        <Alert variant="success">Today's market price: ${price}</Alert>
+        <Alert variant="success">Today&apos;s market price: ${price}</Alert>
     );
 }
