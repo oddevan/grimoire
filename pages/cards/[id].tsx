@@ -6,6 +6,7 @@ import { getAllCardIds, getCardInfo } from "../../lib/static";
 import { GrimoireCard } from "../../types/GrimoireCard";
 import dynamic from "next/dynamic";
 import { Col, Row } from "react-bootstrap";
+import CardPrice from "../../components/CardPrice";
 
 type CardPageParams = {
 	id: string;
@@ -50,6 +51,7 @@ export default function CardPage(card: GrimoireCard) {
 								<dt className="col-lg-6">PokemonTCG.guru ID</dt>
 								<dd className="col-lg-6">{card.guruId}</dd>
 							</dl>
+							<CardPrice id={card.id} />
 						</Col>
 					</Row>
 				</Col>
