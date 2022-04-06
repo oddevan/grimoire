@@ -1,4 +1,4 @@
-import {useState, Fragment} from 'react';
+import {useState, Fragment, useEffect} from 'react';
 import {Alert} from 'react-bootstrap';
 
 export default function CardPrice(params: {id: string}) {
