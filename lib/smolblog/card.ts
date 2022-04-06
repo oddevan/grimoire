@@ -28,3 +28,17 @@ export async function getUserCollectionsForCard(smolblogAccessCode: string, card
 		}
 	}) : [];
 }
+
+export async function getCardPrice(cardId: string): Promise<number> {
+	if (!cardId) return -1;
+	
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}card/${cardId}/price`
+	);
+
+	if (!response.ok || !response.status) return -1;
+
+	const priceData = await response.json();
+
+  return priceData.price ?? -1;
+}
