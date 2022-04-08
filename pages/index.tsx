@@ -40,6 +40,15 @@ const Home: NextPage = () => {
 					</Link>
 				)}
 			</p>
+
+			<p>
+				Grimoire is currently in private beta. If you would like to try it out
+				and are willing to give feedback on your experience,{" "}
+				<a href="https://eph.me/smolblog-beta-request">
+					request a Smolblog beta account
+				</a>
+				.
+			</p>
 		</div>
 	);
 };
