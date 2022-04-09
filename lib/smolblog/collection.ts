@@ -64,3 +64,19 @@ export async function createCollection(name: string, smolblogAccessCode: string)
 	
 	return responseData;
 }
+
+export async function downloadExport(collectionId: number, smolblogAccessCode: string) {
+	if (!smolblogAccessCode || !collectionId) return;
+
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/${collectionId}/export`,
+		smolblogGetSettings(smolblogAccessCode)
+	);
+	
+	if (!response.ok) {
+		const errorObj = await response.json().catch(() => undefined);
+		throw new Error(`Error from Smolblog: ${errorObj?.message ?? response.status}`);
+	}
+
+	return response.blob();
+};
