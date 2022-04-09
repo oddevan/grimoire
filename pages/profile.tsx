@@ -7,10 +7,12 @@ import {
 	GrimoireCollectionEntry,
 } from "../types/GrimoireCollection";
 import dynamic from "next/dynamic";
-import { Accordion, Col, Row } from "react-bootstrap";
+import { Accordion, Button, Col, Row } from "react-bootstrap";
 import CollectionTable from "../components/CollectionTable";
-import { getUserCollections } from "../lib/smolblog/collection";
+import { getUserCollections, downloadExport } from "../lib/smolblog/collection";
 import CreateCollectionModal from "../components/CreateCollectionModal";
+import CSVIcon from "../components/icons/CSV";
+import download from "downloadjs";
 
 const LoginDynamic = dynamic(() => import("../components/SmolblogLogin"), {
 	ssr: false,
@@ -95,6 +97,26 @@ export default function ProfilePage() {
 								>
 									<Accordion.Header>{collection.name}</Accordion.Header>
 									<Accordion.Body>
+										<p className="text-end">
+											<Button
+												variant="secondary"
+												// href={`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/${collection.id}/export`}
+												onClick={async () => {
+													const csvData = await downloadExport(
+														collection.id,
+														smolblogAccessCode
+													);
+													download(
+														csvData,
+														`${collection.name}.csv`,
+														"text/csv"
+													);
+												}}
+											>
+												<CSVIcon />
+												Download CSV of {collection.name}
+											</Button>
+										</p>
 										{collection.cards ? (
 											<CollectionTable cards={filteredCards} />
 										) : (
