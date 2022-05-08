@@ -1,5 +1,5 @@
 import { useState, Fragment, useEffect } from "react";
-import { Alert } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { getCardPrice } from "../lib/smolblog/card";
 
 export default function CardPrice(params: { id: string }) {
@@ -16,6 +16,20 @@ export default function CardPrice(params: { id: string }) {
 	if (!price || price < 0) return <Fragment />;
 
 	return (
-		<Alert variant="success">Today&apos;s market price: {`\$${price}`}</Alert>
+		<div className="d-grid gap-2">
+			<Button
+				variant="success"
+				size="lg"
+				href={`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}card/${id}/link`}
+			>
+				Today&apos;s TCGplayer market price: {`\$${price}`}
+			</Button>
+			<p
+				className="text-muted text-end"
+				style={{ fontSize: ".8em", marginTop: "0px" }}
+			>
+				Affiliate link: oddEvan may get a comission
+			</p>
+		</div>
 	);
 }
