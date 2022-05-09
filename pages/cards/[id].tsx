@@ -75,9 +75,7 @@ export async function getStaticPaths() {
 	};
 }
 
-export const getStaticProps = async ({
-	params,
-}: GetStaticPropsContext<CardPageParams>) => {
+export const getStaticProps = async ({ params }: GetStaticPropsContext<CardPageParams>) => {
 	const card = await getCardInfo(params?.id ?? "");
 
 	if (!card) {
@@ -86,5 +84,5 @@ export const getStaticProps = async ({
 		);
 	}
 
-	return { props: card };
-};
+	return { props: card, revalidate: 86400 }; // Cache page for 1 day.
+};;
