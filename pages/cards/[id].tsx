@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext } from "next";
+import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { Fragment } from "react";
 import Printings from "../../components/Printings";
@@ -48,17 +48,16 @@ export default function CardPage(card: GrimoireCard) {
 							<dl className="row">
 								<dt className="col-lg-6">TCGplayer SKU:</dt>
 								<dd className="col-lg-6">{card.sku}</dd>
-								<dt className="col-lg-6">PokemonTCG.guru ID</dt>
-								<dd className="col-lg-6">{card.guruId}</dd>
+								<dt className="col-lg-6">Grimoire ID:</dt>
+								<dd className="col-lg-6">
+									<code>{card.id}</code>
+								</dd>
 							</dl>
 							<CardPrice id={card.id} />
 						</Col>
 					</Row>
 				</Col>
 				<Col sm="6" lg="4" xl="3">
-					<div className="alert alert-primary">
-						Grimoire ID: <code>{card.id}</code>
-					</div>
 					<Printings printings={card.printings} />
 				</Col>
 			</Row>
@@ -67,15 +66,10 @@ export default function CardPage(card: GrimoireCard) {
 	);
 }
 
-export async function getStaticPaths() {
-	const paths = await getAllCardIds();
-	return {
-		paths,
-		fallback: false,
-	};
-}
-
-export const getStaticProps = async ({ params }: GetStaticPropsContext<CardPageParams>) => {
+export const getServerSideProps = async ({
+	params,
+	res,
+}: GetServerSidePropsContext<CardPageParams>) => {
 	const card = await getCardInfo(params?.id ?? "");
 
 	if (!card) {
@@ -84,5 +78,14 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext<CardPageP
 		);
 	}
 
-	return { props: card, revalidate: 86400 }; // Cache page for 1 day.
-};;
+	const secondsInDay = 60 * 60 * 24;
+
+	res.setHeader(
+		"Cache-Control",
+		`public, s-maxage=${secondsInDay}, stale-while-revalidate=${
+			secondsInDay * 7
+		}`
+	);
+
+	return { props: card }; // Cache page for 1 day.
+};
