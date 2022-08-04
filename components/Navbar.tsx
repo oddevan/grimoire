@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import NBLink from "./NBLink";
+import GrimoireLogo from "./icons/Grimoire";
 
 const UserDynamic = dynamic(() => import("./User"), { ssr: false });
 
@@ -9,6 +10,7 @@ export default function GrimoireNavbar() {
 		<Navbar variant="dark" bg="primary" expand="md">
 			<Container>
 				<Navbar.Brand href="/" as={NBLink}>
+					<GrimoireLogo />
 					Grimoire
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbar-mobile-collapse" />

@@ -8,7 +8,7 @@ const apollo = new ApolloClient({
 });
 
 export const getAllCardIds = async () => getAllCardIdsWithClient(apollo);
-export const getCardCatalogInfo = async () => getCardCatalogInfoWithClient(apollo);
+// export const getCardCatalogInfo = async () => getCardCatalogInfoWithClient(apollo);
 export const getCardInfo = async (cardId: string) => getCardInfoWithClient(cardId, apollo);
 
 export const getSetSlugs = async () => getSetSlugsWithClient(apollo);
