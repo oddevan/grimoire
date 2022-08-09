@@ -1,5 +1,5 @@
 import { GrimoireCollection } from "../../types/GrimoireCollection";
-import { smolblogGetSettings, smolblogPostSettings } from "./utils";
+import { smolblogGetSettings, smolblogPostSettings } from "../utils";
 
 export async function setCardQuantity(cardId: string, collectionId: number, quantity: number, smolblogAccessCode: string) {
 	if (

@@ -1,4 +1,4 @@
-import { smolblogGetSettings } from "./utils";
+import { smolblogGetSettings } from "../utils";
 
 export interface UserInfo {
 	username: string;
