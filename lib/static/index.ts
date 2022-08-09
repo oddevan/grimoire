@@ -1,16 +1,10 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { getAllCardIdsWithClient, getCardInfoWithClient, getCardCatalogInfoWithClient } from "./cards"
-import { getSetCardsWithClient, getSetSlugsWithClient, getSetsWithClient } from './sets';
+import { getAllCardIdsWithClient, getCardInfoWithClient } from "./cards"
+import { getSetCardsWithClient, getSetSlugsWithClient, getSetsWithClient, getSetWithCardsWithClient } from './sets';
 
-const apollo = new ApolloClient({
-  uri: process.env.BUILD_DATA_URL,
-  cache: new InMemoryCache()
-});
+export const getAllCardIds = async () => getAllCardIdsWithClient();
+export const getCardInfo = async (cardId: string) => getCardInfoWithClient(cardId);
 
-export const getAllCardIds = async () => getAllCardIdsWithClient(apollo);
-// export const getCardCatalogInfo = async () => getCardCatalogInfoWithClient(apollo);
-export const getCardInfo = async (cardId: string) => getCardInfoWithClient(cardId, apollo);
-
-export const getSetSlugs = async () => getSetSlugsWithClient(apollo);
-export const getSets = async () => getSetsWithClient(apollo);
-export const getSetCards = async (slug: string) => getSetCardsWithClient(slug, apollo);
+export const getSetSlugs = async () => getSetSlugsWithClient();
+export const getSets = async () => getSetsWithClient();
+export const getSetWithCards = async (slug: string) => getSetWithCardsWithClient(slug);
+export const getSetCards = async (slug: string) => getSetCardsWithClient(slug);

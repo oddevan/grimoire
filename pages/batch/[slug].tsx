@@ -4,7 +4,7 @@ import Head from "next/head";
 import React, { Fragment, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import InventoryLineItem from "../../components/InventoryLineItem";
-import { getSetCards, getSetSlugs } from "../../lib/static";
+import { getSetWithCards, getSetSlugs } from "../../lib/static";
 import { GrimoireCollection } from "../../types/GrimoireCollection";
 import { GrimoireSet } from "../../types/GrimoireSet";
 
@@ -86,16 +86,17 @@ export async function getStaticProps({
 	if (!params) return { props: { cards: [], name: "", slug: "" } };
 
 	const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug ?? "";
-	const cards = await getSetCards(slug ?? "");
-	const name = cards[0]?.setName ?? slug ?? "";
+	const set = await getSetWithCards(slug);
 
-	return { props: { cards, name, slug } };
+	return { props: set };
 }
 
 export async function getStaticPaths() {
-	const paths = await getSetSlugs();
+	const slugs = await getSetSlugs();
 	return {
-		paths,
+		paths: slugs.map((slug) => {
+			return { params: { slug } };
+		}),
 		fallback: false,
 	};
 }
