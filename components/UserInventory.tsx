@@ -16,7 +16,7 @@ export default function UserInventory(props: UserInventoryProps) {
 	const { card } = props;
 	const { smolblogAccessCode } = useSmolblog();
 	const [inventoryItems, setInventoryItems] = useState<
-		[CardCollectionLineItem?]
+		CardCollectionLineItem[]
 	>([]);
 
 	useEffect(() => {

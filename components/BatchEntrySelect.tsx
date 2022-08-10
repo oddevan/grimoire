@@ -6,7 +6,7 @@ import { GrimoireCollection } from "../types/GrimoireCollection";
 
 export default function BatchEntrySelect(props: { setCollection: Function }) {
 	const { smolblogAccessCode } = useSmolblog();
-	const [collections, setCollections] = useState<[GrimoireCollection?]>([]);
+	const [collections, setCollections] = useState<GrimoireCollection[]>([]);
 	const [busy, setBusy] = useState(false);
 
 	const onChange = (event: SyntheticEvent<HTMLSelectElement, Event>) => {

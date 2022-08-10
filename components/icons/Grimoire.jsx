@@ -1,6 +1,10 @@
 function Icon() {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 1024 1024"
+			style={{ width: "50px", height: "auto", fill: "white" }}
+		>
 			<g
 				fillRule="evenodd"
 				stroke="#fff"
@@ -21,7 +25,7 @@ function Icon() {
 				></path>
 			</g>
 			<path
-				fill="none"
+				fill="#fff"
 				stroke="#fff"
 				strokeLinecap="round"
 				strokeLinejoin="round"

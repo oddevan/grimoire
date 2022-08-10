@@ -5,7 +5,7 @@ import { GrimoireCard } from "../types/GrimoireCard";
 import NBLink from "./NBLink";
 
 export interface PrintingsProps {
-	printings?: [GrimoireCard];
+	printings?: GrimoireCard[];
 }
 
 export default function Printings(props: PrintingsProps) {

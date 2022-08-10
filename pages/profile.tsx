@@ -19,7 +19,7 @@ const LoginDynamic = dynamic(() => import("../components/SmolblogLogin"), {
 });
 
 export default function ProfilePage() {
-	const [collections, setCollections] = useState<[GrimoireCollection?]>([]);
+	const [collections, setCollections] = useState<GrimoireCollection[]>([]);
 	const [user, setUser] = useState<UserInfo | undefined>(undefined);
 	const { smolblogAccessCode } = useSmolblog();
 

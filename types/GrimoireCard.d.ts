@@ -8,5 +8,5 @@ export interface GrimoireCard {
 	guruId?: string,
 	hash?: string,
 	price?: number,
-	printings?: [GrimoireCard],
+	printings?: GrimoireCard[],
 }

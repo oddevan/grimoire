@@ -27,7 +27,7 @@ export async function setCardQuantity(cardId: string, collectionId: number, quan
 	return responseData;
 }
 
-export async function getUserCollections(smolblogAccessCode: string): Promise<[GrimoireCollection?]> {
+export async function getUserCollections(smolblogAccessCode: string): Promise<GrimoireCollection[]> {
 	if (!smolblogAccessCode) return [];
 
 	const response = await fetch(
