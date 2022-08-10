@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { getSets } from "../../lib/static";
 import { GrimoireSet } from "../../types/GrimoireSet";
 
-export default function BatchEntryIndex(props: { sets: [GrimoireSet?] }) {
+export default function BatchEntryIndex(props: { sets: GrimoireSet[] }) {
 	const { sets } = props;
 	return (
 		<Fragment>

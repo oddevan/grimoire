@@ -3,7 +3,7 @@ export interface GrimoireCollection {
 	name: string;
 	slug?: string;
 	isPublic?: boolean;
-	cards?: [GrimoireCollectionEntry?];
+	cards?: GrimoireCollectionEntry[];
 }
 
 export interface GrimoireCollectionEntry {

@@ -26,6 +26,7 @@ export const api = {
 		const responseData = await response.json();
 
 		if (!response.ok) {
+			console.log(response);
 			throw new Error(`Error from API: ${responseData.message ?? response.status}`);
 		};
 		
