@@ -17,7 +17,7 @@ export function smolblogPostSettings(smolblogAccessCode: string): RequestInit {
 export const api = {
 	async get(endpoint: string, options: RequestInit = {}) {
 		const response = await fetch(
-			`${process.env.GRIMOIRE_API_BASE}${endpoint}`,
+			`${process.env.NEXT_PUBLIC_GRIMOIRE_API_BASE}${endpoint}`,
 			{
 				method: 'GET',
 				...options

@@ -40,7 +40,7 @@ const User = () => {
 		return <SmolblogLogin className="btn btn-outline-light ms-2" />;
 	}
 
-	if (user.displayName) {
+	if (user.username) {
 		return (
 			<Fragment>
 				<Nav>

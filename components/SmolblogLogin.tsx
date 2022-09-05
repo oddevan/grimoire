@@ -9,7 +9,7 @@ interface SmolblogLoginProps {
 
 export default function SmolblogLogin(props: SmolblogLoginProps) {
 	const { setSmolblogCode } = useSmolblog();
-	const redirectUri = `${window.location.protocol}//${window.location.host}/oauth-callback`;
+	const redirectUri = `${window.location.protocol}//${window.location.host}/oauth?callback=true`;
 	const session = new Vault({ type: "session" });
 
 	const className = props.className ?? "btn btn-primary";
@@ -21,19 +21,16 @@ export default function SmolblogLogin(props: SmolblogLoginProps) {
 
 	return (
 		<OAuth2Login
-			authorizationUrl={
-				process.env.NEXT_PUBLIC_SMOLBLOG_OAUTH_ENDPOINT ??
-				"https://grimoireapp.smolblog.com/oauth/authorize/"
-			}
+			authorizationUrl={process.env.NEXT_PUBLIC_GRIMOIRE_OAUTH_ENDPOINT ?? ""}
 			responseType="token"
-			clientId={process.env.NEXT_PUBLIC_SMOLBLOG_APP_ID ?? ""}
+			clientId={process.env.NEXT_PUBLIC_GRIMOIRE_APP_ID ?? ""}
 			redirectUri={redirectUri}
 			onSuccess={onSuccess}
 			onFailure={(res: any) => console.error(res)}
 			className={className}
 		>
 			<BadgeIcon />
-			<span className="ml-2">Login with Smolblog</span>
+			<span className="ml-2">Login</span>
 		</OAuth2Login>
 	);
 }

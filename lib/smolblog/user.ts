@@ -9,7 +9,7 @@ export async function getCurrentUserInfo(smolblogAccessCode: string) : Promise<U
   if (!smolblogAccessCode) return undefined;
 	
 	const response = await fetch(
-		process.env.NEXT_PUBLIC_SMOLBLOG_USER_ENDPOINT ?? "https://grimoireapp.smolblog.com/wp-json/wp/v2/users/me",
+		process.env.NEXT_PUBLIC_GRIMOIRE_USER_ENDPOINT ?? "",
 		smolblogGetSettings(smolblogAccessCode),
 	);
 	const userData = await response.json();
