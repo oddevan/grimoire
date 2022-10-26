@@ -69,13 +69,13 @@ class TCGplayer {
 		return info[0];
 	}
 
-	async cards_from_set(setId: number, quantity = 200, offset = 0) {
+	async cardsFromSet(setId: number, quantity = 200, offset = 0) {
 		return await this.baseRequest(`catalog/products?categoryId=3&productTypes=Cards&` +
 			`groupId=${setId}&getExtendedFields=true&includeSkus=true&` +
 			`offset=${offset}&limit=${quantity}`);
 	}
 
-	async prices_for_skus(skus: Array<number>) {
+	async pricesForSkus(skus: Array<number>) {
 		return await this.baseRequest('pricing/sku/' + skus.join(','))
 	}
 }
