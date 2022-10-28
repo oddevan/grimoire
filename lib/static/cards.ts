@@ -1,12 +1,23 @@
-import { SupabaseClient } from '@supabase/supabase-js';
+import { PostgrestResponse, SupabaseClient } from '@supabase/supabase-js';
 import { Database } from '../../types/database';
 import { GrimoireCard } from '../../types/GrimoireCard';
 
 export async function getAllCardIdsWithClient(supabase: SupabaseClient<Database>) {
-	const { data, error } = await supabase
-		.from("printings")
-		.select("id")
-	if (error) { throw error; }
+	let start = 0;
+	let end = 999;
+	let results: PostgrestResponse<{ id: string; }>;
+	let data: Array<{ id: string }> = []
+	do {
+		results = await supabase
+			.from("printings")
+			.select("id")
+			.range(start, end)
+		if (results.error) { throw results.error; }
+
+		data = data.concat(results.data);
+		start += 1000;
+		end += 1000;
+	} while (results.data?.length && results.data.length > 0);
 
 	return data.map(({ id }) => {
 		return { params: { id } };
@@ -31,11 +42,11 @@ export async function getCardInfoWithClient(id: string, supabase: SupabaseClient
 		setSlug: data.setslug ?? undefined,
 		hash: data.hash ?? undefined,
 		printings: printings.map(entry => {
-			const { id, name, set } = <any>entry;
+			const { id, name, setname } = <any>entry;
 			return {
 				id: <string>id,
 				name: <string>name,
-				setName: <string>set,
+				setName: <string>setname,
 			};
 		}),
 	};

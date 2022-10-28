@@ -1,85 +1,43 @@
-import { ApolloClient, gql, NormalizedCacheObject } from "@apollo/client";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "../../types/database";
 import { GrimoireCard } from "../../types/GrimoireCard";
 import { GrimoireSet } from "../../types/GrimoireSet";
 
-export async function getSetSlugsWithClient(
-	apollo: ApolloClient<NormalizedCacheObject>
-) {
-	interface queryResult {
-		__typename: string;
-		setSlug: string;
+export async function getSetSlugsWithClient(supabase: SupabaseClient<Database>) {
+	const { data, error } = await supabase.from("sets").select("slug");
+	if (error) {
+		throw error;
 	}
 
-	const { data } = await apollo.query({
-		query: gql`
-			query setSlugs {
-				card {
-					setSlug
-				}
-			}
-		`,
-	});
-
-	const reducedData: [string?] = [];
-	data.card.forEach((card: queryResult) => {
-		const { setSlug } = card;
-		if (!reducedData.includes(setSlug)) {
-			reducedData.push(setSlug);
-		}
-	});
-
-	return reducedData.map((item) => {
-		return item ? { params: { slug: item } } : undefined;
+	return data.map(({ slug }) => {
+		return { params: { slug } };
 	});
 }
 
 export async function getSetsWithClient(
-	apollo: ApolloClient<NormalizedCacheObject>
-) {
-	interface queryResult {
-		__typename: string;
-		setName: string;
-		setSlug: string;
+	supabase: SupabaseClient<Database>
+): Promise<GrimoireSet[]> {
+	const { data, error } = await supabase.from("sets").select("name, slug");
+	if (error) {
+		throw error;
 	}
 
-	const { data } = await apollo.query({
-		query: gql`
-			query setSlugs {
-				card {
-					setName
-					setSlug
-				}
-			}
-		`,
-	});
-
-	const reducedData: [GrimoireSet?] = [];
-	data.card.forEach((card: queryResult) => {
-		const { setName, setSlug } = card;
-		if (reducedData.findIndex((set) => set?.slug == setSlug) < 0) {
-			reducedData.push({ name: setName, slug: setSlug });
-		}
-	});
-
-	return reducedData;
+	return data;
 }
 
 export async function getSetCardsWithClient(
 	slug: string,
-	apollo: ApolloClient<NormalizedCacheObject>
-): Promise<[GrimoireCard?]> {
-	const { data } = await apollo.query({
-		query: gql`
-      query cardCatalog {
-        card(setSlug: "${slug}") {
-					id,
-					name,
-					setName,
-					setSlug
-				}
-      }
-    `,
-	});
+	supabase: SupabaseClient<Database>
+): Promise<GrimoireCard[]> {
+	const { data, error } = await supabase
+		.from("sets")
+		.select("printings (id, name)")
+		.eq("slug", slug)
+		.order("sequence", { foreignTable: "printings", ascending: true });
+	if (error) {
+		throw error;
+	}
 
-	return data.card || [];
+	const unpacked = data[0]?.printings ?? [];
+	return Array.isArray(unpacked) ? unpacked : [unpacked];
 }
