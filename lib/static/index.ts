@@ -1,16 +1,14 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { getAllCardIdsWithClient, getCardInfoWithClient, getCardCatalogInfoWithClient } from "./cards"
+
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { Database } from '../../types/database';
+import { getAllCardIdsWithClient, getCardInfoWithClient } from "./cards"
 import { getSetCardsWithClient, getSetSlugsWithClient, getSetsWithClient } from './sets';
 
-const apollo = new ApolloClient({
-  uri: process.env.BUILD_DATA_URL,
-  cache: new InMemoryCache()
-});
+const supabase = createBrowserSupabaseClient<Database>();
 
-export const getAllCardIds = async () => getAllCardIdsWithClient(apollo);
-// export const getCardCatalogInfo = async () => getCardCatalogInfoWithClient(apollo);
-export const getCardInfo = async (cardId: string) => getCardInfoWithClient(cardId, apollo);
+export const getAllCardIds = async () => getAllCardIdsWithClient(supabase);
+export const getCardInfo = async (cardId: string) => getCardInfoWithClient(cardId, supabase);
 
-export const getSetSlugs = async () => getSetSlugsWithClient(apollo);
-export const getSets = async () => getSetsWithClient(apollo);
-export const getSetCards = async (slug: string) => getSetCardsWithClient(slug, apollo);
+export const getSetSlugs = async () => getSetSlugsWithClient(supabase);
+export const getSets = async () => getSetsWithClient(supabase);
+export const getSetCards = async (slug: string) => getSetCardsWithClient(slug, supabase);

@@ -1,64 +1,42 @@
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client'
+import { SupabaseClient } from '@supabase/supabase-js';
+import { Database } from '../../types/database';
 import { GrimoireCard } from '../../types/GrimoireCard';
 
-export async function getAllCardIdsWithClient(apollo: ApolloClient<NormalizedCacheObject>) {
-	interface queryResult {
-		__typename: String,
-		id: String
-	}
+export async function getAllCardIdsWithClient(supabase: SupabaseClient<Database>) {
+	const { data, error } = await supabase
+		.from("printings")
+		.select("id")
+	if (error) { throw error; }
 
-	const { data } = await apollo.query({
-    query: gql`
-      query cardSlugs {
-        card {
-					id
-				}
-      }
-    `
-  });
-
-	return data.card.map((item:queryResult) => {
-		return { params: { id: item.id } }
-	})
+	return data.map(({ id }) => {
+		return { params: { id } };
+	});
 }
 
-export async function getCardCatalogInfoWithClient(apollo: ApolloClient<NormalizedCacheObject>): Promise<[GrimoireCard?]> {
-const { data } = await apollo.query({
-    query: gql`
-      query cardCatalog {
-        card {
-					id,
-					name,
-					setName,
-					setSlug
-				}
-      }
-    `
-  });
+export async function getCardInfoWithClient(id: string, supabase: SupabaseClient<Database>) : Promise<GrimoireCard | undefined> {
+	const { data, error } = await supabase
+		.from("card_page_data")
+		.select("*")
+		.eq('id', id)
+		.single()
+	if (error) { throw error; }
 
-	return data.card || [];
-}
+	const printings = data.printings ?? [];
 
-export async function getCardInfoWithClient(id: string, apollo: ApolloClient<NormalizedCacheObject>) : Promise<GrimoireCard | undefined> {
-	const { data } = await apollo.query({
-    query: gql`
-      query cardInfo {
-				card(grimoireId: "${id}") {
-					id
-					hash
-					name
-					sku
-					imgUrl
-					setName
-					printings {
-						id
-						name
-						setName
-					}
-				}
-			}
-    `
-  });
-
-	return data.card[0] || undefined
+	return {
+		id: data.id!,
+		name: data.name!,
+		imgUrl: data.imgurl ?? undefined,
+		setName: data.setname ?? undefined,
+		setSlug: data.setslug ?? undefined,
+		hash: data.hash ?? undefined,
+		printings: printings.map(entry => {
+			const { id, name, set } = <any>entry;
+			return {
+				id: <string>id,
+				name: <string>name,
+				setName: <string>set,
+			};
+		}),
+	};
 }
