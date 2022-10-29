@@ -6,7 +6,7 @@ export interface CardCollectionLineItem {
 	quantity: number;
 }
 
-export async function getUserCollectionsForCard(smolblogAccessCode: string, cardId: string): Promise<[CardCollectionLineItem?]> {
+export async function getUserCollectionsForCard(smolblogAccessCode: string, cardId: string): Promise<CardCollectionLineItem[]> {
 	if (!smolblogAccessCode || !cardId) return [];
 	
 	const response = await fetch(

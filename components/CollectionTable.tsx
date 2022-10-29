@@ -88,6 +88,7 @@ export default function CollectionTable(props: {
 								if (firstCol) {
 									firstCol = false;
 									return (
+										// eslint-disable-next-line react/jsx-key
 										<th scope="row" {...cell.getCellProps()}>
 											{cell.render("Cell")}
 										</th>

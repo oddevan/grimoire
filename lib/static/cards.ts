@@ -32,7 +32,9 @@ export async function getCardInfoWithClient(id: string, supabase: SupabaseClient
 		.single()
 	if (error) { throw error; }
 
-	const printings = data.printings ?? [];
+	const printings = data?.printings ?? [];
+
+	if (!data) { return undefined; }
 
 	return {
 		id: data.id!,

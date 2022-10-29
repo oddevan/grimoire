@@ -9,6 +9,8 @@ export async function getSetSlugsWithClient(supabase: SupabaseClient<Database>) 
 		throw error;
 	}
 
+	if (!data) { return []; }
+
 	return data.map(({ slug }) => {
 		return { params: { slug } };
 	});
@@ -22,7 +24,7 @@ export async function getSetsWithClient(
 		throw error;
 	}
 
-	return data;
+	return data ?? [];
 }
 
 export async function getSetCardsWithClient(
@@ -37,6 +39,7 @@ export async function getSetCardsWithClient(
 	if (error) {
 		throw error;
 	}
+	if (!data) { return []; }
 
 	const unpacked = data[0]?.printings ?? [];
 	return Array.isArray(unpacked) ? unpacked : [unpacked];
