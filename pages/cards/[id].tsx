@@ -53,7 +53,7 @@ export default function CardPage(card: GrimoireCard) {
 									<code>{card.id}</code>
 								</dd>
 							</dl>
-							<CardPrice id={card.id} />
+							<CardPrice card={card} />
 						</Col>
 					</Row>
 				</Col>
@@ -76,6 +76,9 @@ export const getServerSideProps = async ({
 		throw new TypeError(
 			params?.id ? `No card found for id ${params.id}` : "Params not passed"
 		);
+	}
+	if (!card.price) {
+		delete card.price;
 	}
 
 	const secondsInDay = 60 * 60 * 24;

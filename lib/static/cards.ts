@@ -43,6 +43,7 @@ export async function getCardInfoWithClient(id: string, supabase: SupabaseClient
 		setName: data.setname ?? undefined,
 		setSlug: data.setslug ?? undefined,
 		hash: data.hash ?? undefined,
+		price: data.market_price ?? undefined,
 		printings: printings.map(entry => {
 			const { id, name, setname } = <any>entry;
 			return {

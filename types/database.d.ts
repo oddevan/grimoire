@@ -170,6 +170,50 @@ export interface Database {
       }
       printings: {
         Row: {
+          dbid: number
+          id: string
+          name: string
+          set_id: number
+          sequence: string
+          image_url: string | null
+          tcgplayer_sku: string | null
+          tcgplayer_product: string | null
+          signature_data: string
+          created_at: string
+          updated_at: string
+          signature: string | null
+        }
+        Insert: {
+          dbid?: number
+          id: string
+          name: string
+          set_id: number
+          sequence: string
+          image_url?: string | null
+          tcgplayer_sku?: string | null
+          tcgplayer_product?: string | null
+          signature_data: string
+          created_at?: string
+          updated_at?: string
+          signature?: string | null
+        }
+        Update: {
+          dbid?: number
+          id?: string
+          name?: string
+          set_id?: number
+          sequence?: string
+          image_url?: string | null
+          tcgplayer_sku?: string | null
+          tcgplayer_product?: string | null
+          signature_data?: string
+          created_at?: string
+          updated_at?: string
+          signature?: string | null
+        }
+      }
+      printings_v1: {
+        Row: {
           name: string
           id: string
           tcgplayer_sku: string | null
@@ -181,6 +225,7 @@ export interface Database {
           created_at: string
           updated_at: string
           signature: string | null
+          dbid: number
         }
         Insert: {
           name: string
@@ -194,6 +239,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
           signature?: string | null
+          dbid?: number
         }
         Update: {
           name?: string
@@ -207,6 +253,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
           signature?: string | null
+          dbid?: number
         }
       }
       profiles: {
@@ -278,6 +325,7 @@ export interface Database {
           setslug: string | null
           hash: string | null
           printings: Json[] | null
+          market_price: number | null
         }
       }
     }
