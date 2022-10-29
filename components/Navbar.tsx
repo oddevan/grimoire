@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import NBLink from "./NBLink";
 import GrimoireLogo from "./icons/Grimoire";
+import LoginButton from "./LoginButton";
 
 const UserDynamic = dynamic(() => import("./User"), { ssr: false });
 
@@ -20,7 +21,8 @@ export default function GrimoireNavbar() {
 							Catalog
 						</Nav.Link>
 					</Nav>
-					<UserDynamic />
+					{/* <UserDynamic /> */}
+					<LoginButton />
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>

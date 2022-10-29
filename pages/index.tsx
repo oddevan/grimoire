@@ -1,21 +1,12 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
+import type { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { useSmolblog } from "../contexts/SmolblogProvider";
 import { useEffect, useState } from "react";
 
-const LoginDynamic = dynamic(() => import("../components/SmolblogLogin"), {
-	ssr: false,
-});
-
 const Home: NextPage = () => {
-	const [showLogin, setShowLogin] = useState(false);
-	const { smolblogAccessCode } = useSmolblog();
-
-	useEffect(() => {
-		setShowLogin(!smolblogAccessCode);
-	}, [smolblogAccessCode]);
+	const session = useSession();
 
 	return (
 		<div>
@@ -32,12 +23,12 @@ const Home: NextPage = () => {
 				.
 			</p>
 			<p style={{ textAlign: "center" }}>
-				{showLogin ? (
-					<LoginDynamic />
-				) : (
+				{session ? (
 					<Link href="/profile">
 						<a>Go to your profile</a>
 					</Link>
+				) : (
+					<span />
 				)}
 			</p>
 
@@ -53,4 +44,4 @@ const Home: NextPage = () => {
 	);
 };
 
-export default Home
+export default Home;

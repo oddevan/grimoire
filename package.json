@@ -11,6 +11,7 @@
 		"@apollo/client": "^3.5.9",
 		"@supabase/auth-helpers-nextjs": "^0.4.2",
 		"@supabase/auth-helpers-react": "^0.3.1",
+		"@supabase/auth-ui-react": "^0.2.3",
 		"@supabase/supabase-js": "^2.0.4",
 		"@ultimate/vault": "^0.0.2",
 		"bootstrap": "^5.1.3",
