@@ -1,5 +1,5 @@
+import { Session } from "@supabase/supabase-js";
 import { GrimoireCollection } from "../../types/GrimoireCollection";
-import { smolblogGetSettings, smolblogPostSettings } from "./utils";
 
 export async function setCardQuantity(cardId: string, collectionId: number, quantity: number, smolblogAccessCode: string) {
 	if (
@@ -15,7 +15,7 @@ export async function setCardQuantity(cardId: string, collectionId: number, quan
 				card_id: cardId,
 				quantity
 			}),
-			...smolblogPostSettings(smolblogAccessCode)
+			method: 'POST'
 		}
 	);
 	const responseData = await response.json();
@@ -27,12 +27,11 @@ export async function setCardQuantity(cardId: string, collectionId: number, quan
 	return responseData;
 }
 
-export async function getUserCollections(smolblogAccessCode: string): Promise<GrimoireCollection[]> {
+export async function getUserCollections(smolblogAccessCode: Session): Promise<GrimoireCollection[]> {
 	if (!smolblogAccessCode) return [];
 
 	const response = await fetch(
-		 `${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/usercollections`,
-		 smolblogGetSettings(smolblogAccessCode)
+		 `${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/usercollections`
 	);
 	const collections = await response.json();
 
@@ -53,7 +52,7 @@ export async function createCollection(name: string, smolblogAccessCode: string)
 		`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/create`,
 		{
 			body: JSON.stringify({ name }),
-			...smolblogPostSettings(smolblogAccessCode)
+			method: 'POST'
 		}
 	);
 	const responseData = await response.json();
@@ -69,8 +68,7 @@ export async function downloadExport(collectionId: number, smolblogAccessCode: s
 	if (!smolblogAccessCode || !collectionId) return;
 
 	const response = await fetch(
-		`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/${collectionId}/export`,
-		smolblogGetSettings(smolblogAccessCode)
+		`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/${collectionId}/export`
 	);
 	
 	if (!response.ok) {

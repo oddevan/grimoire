@@ -6,13 +6,8 @@ export interface CardCollectionLineItem {
 	quantity: number;
 }
 
-export async function getUserCollectionsForCard(smolblogAccessCode: string, cardId: string): Promise<CardCollectionLineItem[]> {
-	if (!smolblogAccessCode || !cardId) return [];
-	
-	const response = await fetch(
-		`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}card/${cardId}/usercollections`,
-		smolblogGetSettings(smolblogAccessCode),
-	);
+export async function getUserCollectionsForCard(cardId: string): Promise<CardCollectionLineItem[]> {
+	const response = await fetch(`/api/card/${cardId}/usercollections`);
 
 	if (!response.ok || !response.status) return [];
 
@@ -29,16 +24,25 @@ export async function getUserCollectionsForCard(smolblogAccessCode: string, card
 	}) : [];
 }
 
-export async function getCardPrice(cardId: string): Promise<number> {
-	if (!cardId) return -1;
+export async function getCardPrice(cardId: string): Promise<string|null> {
+	if (!cardId) return null;
 	
 	const response = await fetch(
-		`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}card/${cardId}/price`
+		`/api/card/${cardId}/price`
 	);
 
-	if (!response.ok || !response.status) return -1;
+	if (!response.ok || !response.status) {
+		console.error('Error getting card price', response);
+		return null;
+	}
 
-	const priceData = await response.json();
+	const { price } = await response.json();
+	if (isNaN(+price)) return null;
 
-  return priceData.price ?? -1;
+	const formattedPrice = new Intl.NumberFormat(`en-US`, {
+		currency: `USD`,
+		style: 'currency',
+	}).format(price);
+
+  return formattedPrice;
 }

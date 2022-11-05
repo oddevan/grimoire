@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 const Home: NextPage = () => {
 	const session = useSession();
 
+	useEffect(() => console.log({ session }), [session]);
+
 	return (
 		<div>
 			<Head>

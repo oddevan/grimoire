@@ -1,4 +1,3 @@
-import { useSmolblog } from "../contexts/SmolblogProvider";
 import { Fragment, useEffect, useState } from "react";
 import InventoryLineItem from "./InventoryLineItem";
 import { GrimoireCard } from "../types/GrimoireCard";
@@ -7,6 +6,9 @@ import {
 	getUserCollectionsForCard,
 } from "../lib/smolblog/card";
 import { Col, Row } from "react-bootstrap";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "../types/database";
+import { useSession } from "@supabase/auth-helpers-react";
 
 export interface UserInventoryProps {
 	card: GrimoireCard;
@@ -14,20 +16,21 @@ export interface UserInventoryProps {
 
 export default function UserInventory(props: UserInventoryProps) {
 	const { card } = props;
-	const { smolblogAccessCode } = useSmolblog();
+	const supabase = createBrowserSupabaseClient<Database>();
+	const session = useSession();
 	const [inventoryItems, setInventoryItems] = useState<
 		CardCollectionLineItem[]
 	>([]);
 
 	useEffect(() => {
-		getUserCollectionsForCard(smolblogAccessCode, card.id).then((result) =>
+		getUserCollectionsForCard(card.id).then((result) =>
 			setInventoryItems(result ?? [])
 		);
-	}, [card, smolblogAccessCode]);
+	}, [card]);
 
-	if (!smolblogAccessCode && global.window) {
-		return <Fragment />;
-	}
+	// if (!smolblogAccessCode && global.window) {
+	return <Fragment />;
+	// }
 
 	return (
 		<Row className="justify-content-center">
