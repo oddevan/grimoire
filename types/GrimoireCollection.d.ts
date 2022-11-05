@@ -1,5 +1,5 @@
 export interface GrimoireCollection {
-	id: number;
+	id: string;
 	name: string;
 	slug?: string;
 	isPublic?: boolean;

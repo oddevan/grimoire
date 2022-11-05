@@ -1,11 +1,7 @@
 import Head from "next/head";
 import { Fragment, useEffect, useState } from "react";
-import { useSmolblog } from "../contexts/SmolblogProvider";
 import { getCurrentUserInfo, UserInfo } from "../lib/smolblog/user";
-import {
-	GrimoireCollection,
-	GrimoireCollectionEntry,
-} from "../types/GrimoireCollection";
+import { GrimoireCollection } from "../types/GrimoireCollection";
 import dynamic from "next/dynamic";
 import { Accordion, Button, Col, Row } from "react-bootstrap";
 import CollectionTable from "../components/CollectionTable";
@@ -13,32 +9,29 @@ import { getUserCollections, downloadExport } from "../lib/smolblog/collection";
 import CreateCollectionModal from "../components/CreateCollectionModal";
 import CSVIcon from "../components/icons/CSV";
 import download from "downloadjs";
-
-const LoginDynamic = dynamic(() => import("../components/SmolblogLogin"), {
-	ssr: false,
-});
+import { useSession } from "@supabase/auth-helpers-react";
 
 export default function ProfilePage() {
 	const [collections, setCollections] = useState<GrimoireCollection[]>([]);
-	const [user, setUser] = useState<UserInfo | undefined>(undefined);
-	const { smolblogAccessCode } = useSmolblog();
+	const session = useSession();
+	// const { smolblogAccessCode } = useSmolblog();
 
-	useEffect(() => {
-		if (!smolblogAccessCode) return;
-		getCurrentUserInfo(smolblogAccessCode)
-			.then(setUser)
-			.catch((error) => console.log(`Error from Smolblog: ${error}`));
-	}, [smolblogAccessCode]);
+	// useEffect(() => {
+	// 	if (!smolblogAccessCode) return;
+	// 	getCurrentUserInfo(smolblogAccessCode)
+	// 		.then(setUser)
+	// 		.catch((error) => console.log(`Error from Smolblog: ${error}`));
+	// }, [smolblogAccessCode]);
 
 	useEffect(() => {
 		refreshCollections();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
+	}, [session]);
 
 	const refreshCollections = () => {
-		if (!user) return;
+		if (!session) return;
 		setCollections([]);
-		getUserCollections(smolblogAccessCode)
+		getUserCollections()
 			.then(setCollections)
 			.catch((error) => console.log(`Error from Smolblog: ${error}`));
 	};
@@ -52,17 +45,15 @@ export default function ProfilePage() {
 
 			<Row className="justify-content-center">
 				<Col xl="10" xxl="9">
-					{smolblogAccessCode ? (
+					{session ? (
 						""
 					) : (
 						<p style={{ textAlign: "center" }}>
 							You need to log in for this to work.
-							<br />
-							<LoginDynamic />
 						</p>
 					)}
 
-					<h2>My Info</h2>
+					{/* <h2>My Info</h2>
 
 					<Row as={"dl"}>
 						<Col sm="6" lg="3" as={"dt"}>
@@ -77,18 +68,13 @@ export default function ProfilePage() {
 						<Col sm="6" lg="3" as={"dd"}>
 							{user?.username}
 						</Col>
-					</Row>
+					</Row> */}
 
 					<h2>My Collections</h2>
 
 					<Accordion>
 						{collections?.map((collection) => {
 							if (!collection || !collection.cards) return <Fragment />;
-
-							// via https://www.benmvp.com/blog/filtering-undefined-elements-from-array-typescript/
-							const filteredCards = collection.cards.filter(
-								(card): card is GrimoireCollectionEntry => !!card
-							);
 
 							return (
 								<Accordion.Item
@@ -97,10 +83,9 @@ export default function ProfilePage() {
 								>
 									<Accordion.Header>{collection.name}</Accordion.Header>
 									<Accordion.Body>
-										<p className="text-end">
+										{/* <p className="text-end">
 											<Button
 												variant="secondary"
-												// href={`${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/${collection.id}/export`}
 												onClick={async () => {
 													const csvData = await downloadExport(
 														collection.id,
@@ -116,9 +101,9 @@ export default function ProfilePage() {
 												<CSVIcon />
 												Download CSV of {collection.name}
 											</Button>
-										</p>
+										</p> */}
 										{collection.cards ? (
-											<CollectionTable cards={filteredCards} />
+											<CollectionTable cards={collection.cards} />
 										) : (
 											<Fragment />
 										)}
@@ -127,13 +112,13 @@ export default function ProfilePage() {
 							);
 						})}
 					</Accordion>
-
+					{/* 
 					<p className="text-end">
 						<CreateCollectionModal
 							smolblogAccessCode={smolblogAccessCode}
 							onSuccess={refreshCollections}
 						/>
-					</p>
+					</p> */}
 				</Col>
 			</Row>
 		</Fragment>

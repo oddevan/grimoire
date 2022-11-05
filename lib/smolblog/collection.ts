@@ -27,16 +27,14 @@ export async function setCardQuantity(cardId: string, collectionId: number, quan
 	return responseData;
 }
 
-export async function getUserCollections(smolblogAccessCode: Session): Promise<GrimoireCollection[]> {
-	if (!smolblogAccessCode) return [];
-
+export async function getUserCollections(): Promise<GrimoireCollection[]> {
 	const response = await fetch(
-		 `${process.env.NEXT_PUBLIC_SMOLBLOG_API_BASE}collection/usercollections`
+		 `/api/collection/usercollections`
 	);
 	const collections = await response.json();
 
 	if (!response.ok) {
-		throw new Error(`Error from Smolblog: ${collections.message ?? response.status}`);
+		throw new Error(`Error from API: ${collections.message ?? response.status}`);
 	};
 
 	return collections;
